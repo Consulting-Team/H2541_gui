@@ -27,8 +27,8 @@ async fn export_voyage_report(app: AppHandle, window: WebviewWindow, input: &str
                 window.emit("message", Some(format!("'{}'", line))).expect("failed to emit event");
                 child.write("message from Rust\n".as_bytes()).unwrap();
 
-                println!("WebviewWindow: {}", window.label());
-                println!("{}", line.to_string());
+                // println!("WebviewWindow: {}", window.label());
+                // println!("{}", line.to_string());
             }
         }
     });

@@ -3,26 +3,35 @@
     import { save } from '@tauri-apps/plugin-dialog';
     import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
     import YAML from 'yaml';
-    import ExportBtn from "../../lib/export_btn.svelte";
+    import ExportBtn from '$lib/export_btn.svelte';
 
     /** @type {import('./$types').PageProps}*/
     const { data } = $props();
     const appWebView = getCurrentWebviewWindow();
 
-    appWebView.listen('message', (event) => {
-        console.log(event.payload);
-    });
-
-    let msg = $state('')
+    let msg = $state('');
     let port_departure = $state(data.default_port_departure);
     let port_arrival = $state(data.default_port_arrival);
     let tz_departure = $state(data.default_tz_departure);
     let tz_arrival = $state(data.default_tz_arrival);
-    let dt_departure = $state(data.default_departure);
+    // let dt_departure = $state(data.default_departure);
+    let dt_departure = $state(sessionStorage.getItem('dt_departure') || '');
     let dt_arrival = $state(data.default_arrival);
     let lng_density = $state(data.default_lng_density);
     let bog_density = $state(data.default_bog_density);
     let bog_lhv = $state(data.default_bog_lhv);
+
+    $effect(() => {
+        sessionStorage.setItem('dt_departure', dt_departure);
+    });
+
+    /** @type {HTMLTextAreaElement} */
+    let textArea;
+
+    appWebView.listen('message', (event) => {
+        msg = msg.concat(`\n${event.payload}`);
+        textArea.scrollTop = textArea.scrollHeight;
+    });
 
     async function export_voyage_report() {
 
@@ -57,7 +66,7 @@
         //     msg = res;
         // });
 
-        console.log(input);
+        // console.log(input);
     }
 
 </script>
@@ -116,7 +125,7 @@
         </div>
     </div>
 
-    <textarea></textarea>
+    <textarea bind:this={textArea} bind:value={msg}></textarea>
  </article>
 
  <style>
@@ -146,13 +155,6 @@
     align-items: center;
 }
 
-.export-btn {
-    /* width: 50%; */
-    /* grid-row: 9;
-    grid-column: 3; */
-    width: 8em;
-    height: 3.1em;
-}
 
 .export-btn-area {
     display: flex;
@@ -164,8 +166,12 @@
 
 textarea {
     border: 1px solid black;
-    width: calc(100% - 2em);
+    /* width: calc(100% - 2em); */
+    width: 100%;
     box-sizing: border-box;
+    height: 20vh;
+    font-family: 'Courier New', Courier, monospace;
+    overflow-x: scroll;
 }
 
 input {
