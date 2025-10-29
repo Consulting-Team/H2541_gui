@@ -1,0 +1,29 @@
+{
+  "svelte.enable-ts-plugin": true,
+  "[javascript]": {
+    "separators.enabledSymbols": [
+      "Classes",
+      "Constructors",
+      "Enums",
+      "Functions",
+      "Interfaces",
+      "Methods",
+      "Namespaces",
+      "Structs",
+      // "Properties"
+    ]
+  },
+  "[svelte]": {
+    "separators.enabledSymbols": [
+      "Classes",
+      "Constructors",
+      "Enums",
+      "Functions",
+      "Interfaces",
+      "Methods",
+      "Namespaces",
+      "Structs",
+      // "Properties"
+    ]
+  }
+}

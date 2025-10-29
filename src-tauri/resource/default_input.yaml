@@ -1,0 +1,37 @@
+port_departure: "Port A"
+port_arrival: "Port B"
+
+# H2542 해상시운전 기간
+# departure: 2025-10-04 20:30:00
+# arrival:   2025-10-04 21:30:30
+
+# H2542 테스트(NCR endurance)
+# departure: 2025-10-05 01:30:00
+# arrival:   2025-10-05 03:30:00
+
+# H2542 테스트(NCR UMA)
+# tz_departure: GMT+0
+# departure: 2025-10-06 23:00:00
+
+# tz_arrival: GMT+0
+# arrival:   2025-10-07 01:00:00
+
+# 00:00:00 테스트
+# tz_departure: GMT+9
+# departure: 2025-10-26 11:00:00
+
+# tz_arrival: GMT+9
+# arrival:   2025-10-27 09:00:00
+
+# #DIV/0! 테스트
+tz_departure: GMT+0
+departure: 2025-10-24 07:00:00
+
+tz_arrival: GMT+0
+arrival:   2025-10-24 09:00:00
+
+lng_density: 447.093
+bog_density: 0.779
+bog_lhv: 45400.0
+
+output_file: "reports/report_div0.xlsx"

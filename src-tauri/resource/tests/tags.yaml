@@ -1,0 +1,30 @@
+departure: 2025-10-26 02:00:00
+arrival:   2025-10-27 00:00:00
+
+IAS:
+  - CTS.SHIPWIDE.01/ShipTotVolCorr/PRIM
+  - TotalLiq/Meas1/PRIM
+  - FM-ME1-40100_A/AccValue/PRIM
+  - FM-ME2-40100_A/AccValue/PRIM
+  - STM-006/Meas1/PRIM
+  # - OE012.02/AccValue/PRIM
+  # - GM047.01/Meas1/PRIM
+  # - GH024.02/AccValue/PRIM
+  # - GC029.02/AccValue/PRIM
+  # - FR029.02/AccValue/PRIM
+  # - FV010.05/AccValue/PRIM
+
+VDVBW:
+  - longitudinal_water_speed
+  - traverse_water_speed
+
+YXMWV:
+  - wind_speed
+  - wind_angle
+
+GPVTG:
+  - speed_knots
+  - true_course
+
+HEHDT:
+  - heading

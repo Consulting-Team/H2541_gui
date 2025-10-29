@@ -1,0 +1,14 @@
+port_departure: "A"
+port_departure: "B"
+
+tz_departure: GMT+0
+departure: 2025-10-25 07:00:00
+
+tz_arrival: GMT+0
+arrival:   2025-10-25 09:00:00
+
+lng_density: 447.093
+bog_density: 0.779
+bog_lhv: 45400.0
+
+output_file: "out/tmp.xlsx"

@@ -1,0 +1,68 @@
+appenders:
+  stdout:
+    kind: console
+    encoder:
+      pattern: "{d(%Y-%m-%d %H:%M:%S)} {h({l:5.6})} {m}{n}"
+    filters:
+      - kind: threshold
+        level: info
+        # level: debug
+  file:
+    kind: file
+    append: false
+    encoder:
+      pattern: "{d(%Y-%m-%d %H:%M:%S)} {h({l:5.6})} {m} [{t}:{L}]{n}"
+    path: "log/report_gen.log"
+  report/repodata.rs:
+    kind: file
+    append: false
+    encoder:
+      pattern: "{d(%Y-%m-%d %H:%M:%S)} [{f}:{L}] {h({l:5.6})} {m}{n}"
+    path: "log/report/repodata.log"
+  lib.rs:
+    kind: file
+    append: false
+    encoder:
+      pattern: "{d(%Y-%m-%d %H:%M:%S)} {h({l:5.6})} {m} [{t}:{L}]{n}"
+    path: "log/lib.log"
+  report.rs:
+    kind: file
+    append: false
+    encoder:
+      pattern: "{d(%Y-%m-%d %H:%M:%S)} {h({l:5.6})} {m} [{t}:{L}]{n}"
+    path: "log/report.log"
+  cli.rs:
+    kind: file
+    append: false
+    encoder:
+      pattern: "{d(%Y-%m-%d %H:%M:%S)} {h({l:5.6})} {m} [{t}:{L}]{n}"
+    path: "log/cli.log"
+
+loggers:
+  report/repodata.rs:
+    level: debug
+    appenders:
+      - report/repodata.rs
+    additive: false
+  lib.rs:
+    level: debug
+    appenders:
+      - lib.rs
+    additive: false
+  report.rs:
+    level: debug
+    appenders:
+      - report.rs
+    additive: false
+  cli.rs:
+    level: debug
+    appenders:
+      - cli.rs
+    additive: false
+
+root:
+  level: info
+  # level: debug
+  appenders:
+    - stdout
+    - file
