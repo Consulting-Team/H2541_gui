@@ -1,18 +1,14 @@
 <script>
+    import Menu from "./menu.svelte";
 	let { children } = $props();
 </script>
 
 <main>
     <nav class="nav-bar">
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/voyage_report">Voyage Report</a></li>
-            <li><a href="/daily_report">Daily Report</a></li>
-        </ul>
+        <Menu></Menu>
     </nav>
     {@render children()}
 </main>
-
 
 <style>
 :global(html, body) {
@@ -31,13 +27,6 @@ main {
     box-sizing: border-box;
     width: 30%;
     border-right: 1px solid black;
-}
-
-.nav-bar  ul {
-    list-style-type: none;
-    /* width: 100%; */
-    /* margin: 0;
-    padding: 0; */
 }
 
 :global {

@@ -10,19 +10,27 @@
     const appWebView = getCurrentWebviewWindow();
 
     let msg = $state('');
-    let port_departure = $state(data.default_port_departure);
-    let port_arrival = $state(data.default_port_arrival);
-    let tz_departure = $state(data.default_tz_departure);
-    let tz_arrival = $state(data.default_tz_arrival);
-    // let dt_departure = $state(data.default_departure);
-    let dt_departure = $state(sessionStorage.getItem('dt_departure') || '');
-    let dt_arrival = $state(data.default_arrival);
-    let lng_density = $state(data.default_lng_density);
-    let bog_density = $state(data.default_bog_density);
-    let bog_lhv = $state(data.default_bog_lhv);
+    // cli 인풋 데이터 -> 로컬스토리지에 저장된 정보 로드
+    let port_departure = $state(localStorage.getItem('port_departure') || '');
+    let port_arrival = $state(localStorage.getItem('port_arrival') || '');
+    let tz_departure = $state(localStorage.getItem('tz_departure') || 'GMT+0');
+    let tz_arrival = $state(localStorage.getItem('tz_arrival') || 'GMT+0');
+    let dt_departure = $state(localStorage.getItem('dt_departure') || '');
+    let dt_arrival = $state(localStorage.getItem('dt_arrival') || '');
+    let lng_density = $state(localStorage.getItem('lng_density') || '');
+    let bog_density = $state(localStorage.getItem('bog_density') || '');
+    let bog_lhv = $state(localStorage.getItem('bog_lhv') || '');
 
     $effect(() => {
-        sessionStorage.setItem('dt_departure', dt_departure);
+        localStorage.setItem('port_departure', port_departure);
+        localStorage.setItem('port_arrival', port_arrival);
+        localStorage.setItem('tz_departure', tz_departure);
+        localStorage.setItem('tz_arrival', tz_arrival);
+        localStorage.setItem('dt_departure', dt_departure);
+        localStorage.setItem('dt_arrival', dt_arrival);
+        localStorage.setItem('lng_density', lng_density);
+        localStorage.setItem('bog_density', bog_density);
+        localStorage.setItem('bog_lhv', bog_lhv);
     });
 
     /** @type {HTMLTextAreaElement} */

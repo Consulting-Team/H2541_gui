@@ -16,13 +16,13 @@
   "[svelte]": {
     "separators.enabledSymbols": [
       "Classes",
-      "Constructors",
+      // "Constructors",
       "Enums",
       "Functions",
-      "Interfaces",
-      "Methods",
-      "Namespaces",
-      "Structs",
+      // "Interfaces",
+      // "Methods",
+      // "Namespaces",
+      // "Structs",
       // "Properties"
     ]
   }
