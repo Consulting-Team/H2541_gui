@@ -1,17 +1,4 @@
 <script>
-  import { invoke } from "@tauri-apps/api/core";
-
-  // let name = $state("");
-  // let greetMsg = $state("");
-
-  /**
-   * @param {{ preventDefault: () => void; }} event
-   */
-  // async function greet(event) {
-  //   event.preventDefault();
-  //   // Learn more about Tauri commands at https://tauri.app/develop/calling-rust/
-  //   greetMsg = await invoke("greet", { name });
-  // }
 </script>
 
 <main class="container">

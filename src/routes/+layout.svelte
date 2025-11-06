@@ -1,6 +1,6 @@
 <script>
-    import Menu from "./menu.svelte";
-	let { children } = $props();
+import Menu from "./menu.svelte";
+let { children } = $props();
 </script>
 
 <main>
@@ -27,6 +27,7 @@ main {
     box-sizing: border-box;
     width: 30%;
     border-right: 1px solid black;
+    min-width: 30vw;
 }
 
 :global {

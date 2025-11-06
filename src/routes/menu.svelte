@@ -1,38 +1,38 @@
 <script>
-    class MenuItem {
-        selected = $state(false);
-        /**
-         * @param {string} title
-         * @param {string} href
-         */
-        constructor(title, href) {
-            this.title = title;
-            this.href = href;
-            this.onclick = this.select;
-        }
-
-        select() {
-            let menuItems = [home, voyage, daily];
-            Object.values(menuItems).forEach(menuItem => {
-                if (this.title != menuItem.title) {
-                    menuItem.selected = false;
-                } else {
-                    menuItem.selected = true;
-                }
-            });
-        }
-
-        getClass() {
-            return {
-                "menu-item": true,
-                selected: this.selected
-            }
-        }
+class MenuItem {
+    selected = $state(false);
+    /**
+     * @param {string} title
+     * @param {string} href
+     */
+    constructor(title, href) {
+        this.title = title;
+        this.href = href;
+        this.onclick = this.select;
     }
 
-    let home = new MenuItem('Home', '/');
-    let voyage = new MenuItem('Voyage Report', '/voyage-report');
-    let daily = new MenuItem('Daily Report', '/daily-report');
+    select() {
+        let menuItems = [home, voyage, daily];
+        Object.values(menuItems).forEach(menuItem => {
+            if (this.title != menuItem.title) {
+                menuItem.selected = false;
+            } else {
+                menuItem.selected = true;
+            }
+        });
+    }
+
+    getClass() {
+        return {
+            "menu-item": true,
+            selected: this.selected
+        }
+    }
+}
+
+let home = new MenuItem('Home', '/');
+let voyage = new MenuItem('Voyage Report', '/voyage-report');
+let daily = new MenuItem('Daily Report', '/daily-report');
 </script>
 
 <ul class="menu">
@@ -58,7 +58,8 @@
 
 .menu-item.selected {
     border-radius: 0.5em;
-    background-color: red;
+    background-color: coral;
+    font-weight: bold;
 }
 
 .menu-item:hover {
