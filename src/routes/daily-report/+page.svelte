@@ -30,6 +30,21 @@ $effect(() => {
     localStorage.setItem('bog_lhv_daily', bog_lhv);
 });
 
+/**
+ * @param {Date} dt UTC datetime
+ * @returns {string} formatted string
+*/
+function format(dt) {
+    const year = dt.getFullYear();
+    const month = String(dt.getMonth() + 1).padStart(2, '0');
+    const day = String(dt.getDate()).padStart(2, '0');
+    const hours = String(dt.getHours()).padStart(2, '0');
+    const minutes = String(dt.getMinutes()).padStart(2, '0');
+    const seconds = String(dt.getSeconds()).padStart(2, '0');
+
+    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+}
+
 async function export_daily_report() {
     //! daily report 출력 -> cli 명령 실행
     // 리포트 출력 폴더 선택
@@ -43,16 +58,28 @@ async function export_daily_report() {
         defaultPath: "C:\\Users\\H5495\\Documents\\report",
     });
 
-    let dt = new Date(dt_arrival);
-    dt = new Date(dt.setDate(dt.getDate() - 1));
-    console.log(`date: ${dt}`);
+    if (output_file === null) {
+        return;
+    }
+
+    let arrival = new Date(`${dt_arrival} 12:00:00`);
+    let departure = new Date(arrival.getTime() - 24 * 60 * 60 * 1000)
 
     const input = YAML.stringify({
         port_departure: port_departure,
         port_arrival: port_arrival,
         tz_depzrture: tz_arrival,
         tz_arrival: tz_arrival,
+        departure: format(departure),
+        arrival: format(arrival),
+        lng_density: Number(lng_density),
+        bog_density: Number(bog_density),
+        bog_lhv: Number(bog_lhv),
+        output_file: output_file,
     });
+
+    msg = input;
+    console.log(input);
 }
 </script>
 

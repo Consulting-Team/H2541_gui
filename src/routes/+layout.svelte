@@ -1,6 +1,20 @@
 <script>
 import Menu from "./menu.svelte";
+import { listen } from "@tauri-apps/api/event";
+import Modal from "./modal.svelte";
+
 let { children } = $props();
+let showModal = $state(false);
+
+listen('onProgress', event => {
+    if (event.payload) {
+        console.log('on processing...');
+        showModal = true;
+    } else {
+        console.log('completed');
+        showModal = false;
+    }
+});
 </script>
 
 <main>
@@ -9,6 +23,8 @@ let { children } = $props();
     </nav>
     {@render children()}
 </main>
+
+<Modal bind:showModal={showModal}></Modal>
 
 <style>
 :global(html, body) {
@@ -29,6 +45,10 @@ main {
     border-right: 1px solid black;
     min-width: 30vw;
 }
+
+/* .left-section {
+    height: 100%;
+} */
 
 :global {
     .container {

@@ -21,6 +21,8 @@ let bog_lhv = $state(localStorage.getItem('bog_lhv') || '45400');
 
 /** @type {HTMLTextAreaElement} */
 let textArea;
+/** @type {ExportBtn} */
+let btn;
 
 $effect(() => {
     localStorage.setItem('port_departure', port_departure);
@@ -34,9 +36,11 @@ $effect(() => {
     localStorage.setItem('bog_lhv', bog_lhv);
 });
 
-
 appWebView.listen('message', (event) => {
     msg = msg.concat(`\n${event.payload}`);
+    console.log(event.payload);
+
+    // scroll down
     textArea.scrollTop = textArea.scrollHeight;
 });
 
@@ -53,6 +57,10 @@ async function export_voyage_report() {
         defaultPath: "C:\\Users\\H5495\\Documents\\report",
     });
 
+    if (output_file === null) {
+        return;
+    }
+
     // report_gen 입력
     const input = YAML.stringify({
         port_departure: port_departure,
@@ -61,19 +69,25 @@ async function export_voyage_report() {
         tz_arrival: tz_arrival,
         departure: dt_departure,
         arrival: dt_arrival,
-        lng_density: lng_density,
-        bog_density: bog_density,
-        bog_lhv: bog_lhv,
+        lng_density: Number(lng_density),
+        bog_density: Number(bog_density),
+        bog_lhv: Number(bog_lhv),
         output_file: output_file,
     });
 
-    let out = invoke('export_voyage_report', {input: input});
-    // out.then(res => {
-    //     console.log(res);
-    //     msg = res;
-    // });
+    console.log(input);
+    btn.deactivateBtn();
 
-    // console.log(input);
+    invoke('export_voyage_report', {input: input})
+        .then(msg => {
+            console.log(msg);
+        })
+        .catch(err => {
+            console.error(err);
+        })
+        .finally(() => {
+            btn.activateBtn();
+        })
 }
 </script>
 
@@ -127,7 +141,8 @@ async function export_voyage_report() {
         </div>
 
         <div class="export-btn-area">
-            <ExportBtn action={ export_voyage_report }></ExportBtn>
+            <ExportBtn bind:this={btn} action={export_voyage_report}></ExportBtn>
+            <!-- <ExportBtn bind:this={btn} action={btn.deactivateBtn}></ExportBtn> -->
         </div>
     </div>
 

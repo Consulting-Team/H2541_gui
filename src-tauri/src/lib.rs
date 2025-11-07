@@ -9,30 +9,59 @@ fn greet(name: &str) -> String {
 }
 
 #[tauri::command]
-async fn export_voyage_report(app: AppHandle, window: WebviewWindow, input: &str) -> Result<String, String> {
+async fn export_voyage_report(
+    app: AppHandle,
+    window: WebviewWindow,
+    input: &str,
+) -> Result<String, String> {
+    app.emit("onProgress", true).expect("failed to emit event.");
 
     let sidecar_command = app
         .shell()
         .sidecar("cli")
         .map_err(|e| e.to_string())?
         .args(["-s", input]);
+    // println!("{}", "-".repeat(50));
 
     let (mut rx, mut child) = sidecar_command.spawn().expect("Failed to spawn side car.");
 
-    tauri::async_runtime::spawn(async move {
-        while let Some(event) = rx.recv().await {
-            if let CommandEvent::Stdout(line_bytes) = event {
-                let line = String::from_utf8_lossy(&line_bytes);
-                let line = line.trim();
-                window.emit("message", Some(format!("'{}'", line))).expect("failed to emit event");
-                child.write("message from Rust\n".as_bytes()).unwrap();
+    // tauri::async_runtime::spawn(async move {
+    //     while let Some(event) = rx.recv().await {
+    //         if let CommandEvent::Stdout(line_bytes) = event {
+    //             let line = String::from_utf8_lossy(&line_bytes);
+    //             let line = line.trim();
+    //             window.emit("message", Some(format!("'{}'", line))).expect("failed to emit event");
+    //             child.write("message from Rust\n".as_bytes()).unwrap();
 
-                // println!("WebviewWindow: {}", window.label());
-                // println!("{}", line.to_string());
-            }
+    //             // println!("WebviewWindow: {}", window.label());
+    //             // println!("{}", line.to_string());
+    //         }
+    //     }
+    // });
+
+    while let Some(event) = rx.recv().await {
+        if let CommandEvent::Stdout(line_bytes) = event {
+            let line = String::from_utf8_lossy(&line_bytes);
+            let line = line.trim();
+
+            println!("{line}");
+            window
+                .emit("message", Some(format!("'{}'", line)))
+                .expect("Failed to emit event.");
+            // child.write("message from Rust\n".as_bytes()).unwrap();
+            // child.write("message from Rust\n".as_bytes()).map_err(|e| e.to_string())?;
+            child
+                .write("message from Rust\n".as_bytes())
+                .expect("Failed to write message to child.");
         }
-    });
+        // else if let CommandEvent::Error(err) = event {
+        //     Err(err)?
+        // } else {
+        //     continue;
+        // }
+    }
 
+    app.emit("onProgress", false).expect("failed to emit event.");
     Ok("done".to_string())
 }
 
