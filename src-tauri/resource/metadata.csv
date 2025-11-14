@@ -1,11 +1,14 @@
 item,device,tag,unit
-Draft FWD,IAS,DRAFT_FWD/Meas1/PRIM,m
+Draft Fwd,IAS,DRAFT_FWD/Meas1/PRIM,m
 Draft Aft,IAS,DRAFT_AFT/Meas1/PRIM,m
 LNG Volume,IAS,TotalLiq/Meas1/PRIM,m3
 LNG Temperature CT1,IAS,CTS.CT1.TMP.LIQ/Meas1/PRIM,°C
 LNG Temperature CT2,IAS,CTS.CT2.TMP.LIQ/Meas1/PRIM,°C
 LNG Temperature CT3,IAS,CTS.CT3.TMP.LIQ/Meas1/PRIM,°C
 LNG Temperature CT4,IAS,CTS.CT4.TMP.LIQ/Meas1/PRIM,°C
+LNG Density,IAS,DRAFT_FWD/Meas1/PRIM,kg/m3
+Average BOG Density,IAS,DRAFT_FWD/Meas1/PRIM,kg/m3
+Average BOG LHV,IAS,GA-003C/Meas1/PRIM,kJ/kg
 Vapor Header Pressure CT1,IAS,CTS.CT1.PRESS/Meas1/PRIM,mbarA
 Vapor Header Pressure CT2,IAS,CTS.CT2.PRESS/Meas1/PRIM,mbarA
 Vapor Header Pressure CT3,IAS,CTS.CT3.PRESS/Meas1/PRIM,mbarA
@@ -30,6 +33,9 @@ Generators Fuel Gas consumption,IAS,GE006.02/AccValue/PRIM,tons
 Generator Engins LSMGO flow in,IAS,OE012.02/AccValue/PRIM,tons
 GE Alternator flow in,IAS,FM-DG_40100.02/AccValue/PRIM,tons
 GE Alternator flow out,IAS,FM-DG_40101.02/AccValue/PRIM,tons
+GE1 ENGINE LOAD (%),IAS,GE1-30321/Meas1/PRIM,%
+GE2 ENGINE LOAD (%),IAS,GE2-30321/Meas1/PRIM,%
+GE3 ENGINE LOAD (%),IAS,GE3-30321/Meas1/PRIM,%
 Total LSMGO consumption AB,IAS,OB001.02/AccValue/PRIM,tons
 Total flow through GCU,IAS,GC029.02/AccValue/PRIM,tons
 Total flow through Vent mast,IAS,GH024.02/AccValue/PRIM,tons

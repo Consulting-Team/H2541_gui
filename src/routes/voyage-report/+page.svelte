@@ -3,8 +3,9 @@ import { invoke } from "@tauri-apps/api/core";
 import { save } from '@tauri-apps/plugin-dialog';
 import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 import YAML from 'yaml';
-import ExportBtn from '$lib/export_btn.svelte';
+import ExportBtn from '$lib/exportBtn.svelte';
 import { gmt_list } from "$lib/data";
+import MsgPanel from "$lib/msgPanel.svelte";
 
 const appWebView = getCurrentWebviewWindow();
 let msg = $state('');
@@ -19,8 +20,8 @@ let lng_density = $state(localStorage.getItem('lng_density') || '447.093');
 let bog_density = $state(localStorage.getItem('bog_density') || '0.779');
 let bog_lhv = $state(localStorage.getItem('bog_lhv') || '45400');
 
-/** @type {HTMLTextAreaElement} */
-let textArea;
+/** @type {MsgPanel}*/
+let msgPanel;
 /** @type {ExportBtn} */
 let btn;
 
@@ -37,14 +38,15 @@ $effect(() => {
 });
 
 appWebView.listen('message', (event) => {
-    msg = msg.concat(`\n${event.payload}`);
-    console.log(event.payload);
+    msg = msg.concat(`${event.payload}\n`);
+    // console.log(event.payload);
 
     // scroll down
-    textArea.scrollTop = textArea.scrollHeight;
+    // textArea.scrollTop = textArea.scrollHeight;
+    // msgPanel.toBottom();
 });
 
-async function export_voyage_report() {
+async function exportVoyageReport() {
     //! voyage report 출력 -> cli 명령 실행
     // 리포트 출력 폴더 선택
     const output_file = await save({
@@ -54,7 +56,7 @@ async function export_voyage_report() {
                 extensions: ['xlsx'],
             },
         ],
-        defaultPath: "C:\\Users\\H5495\\Documents\\report",
+        defaultPath: "C:\\Users\\H5495\\Documents\\voyage_report",
     });
 
     if (output_file === null) {
@@ -75,18 +77,20 @@ async function export_voyage_report() {
         output_file: output_file,
     });
 
-    console.log(input);
+    msg = '';
     btn.deactivateBtn();
 
-    invoke('export_voyage_report', {input: input})
+    invoke('export_report', {input: input, repoType: "voyage"})
         .then(msg => {
             console.log(msg);
         })
         .catch(err => {
             console.error(err);
+            alert(err);
         })
         .finally(() => {
             btn.activateBtn();
+            // textArea.scrollTop = textArea.scrollHeight;
         })
 }
 </script>
@@ -141,12 +145,11 @@ async function export_voyage_report() {
         </div>
 
         <div class="export-btn-area">
-            <ExportBtn bind:this={btn} action={export_voyage_report}></ExportBtn>
-            <!-- <ExportBtn bind:this={btn} action={btn.deactivateBtn}></ExportBtn> -->
+            <ExportBtn bind:this={btn} action={exportVoyageReport}></ExportBtn>
         </div>
     </div>
 
-    <textarea bind:this={textArea} bind:value={msg}></textarea>
+     <MsgPanel bind:this={msgPanel} bind:msg={msg}></MsgPanel>
  </article>
 
  <style>
@@ -185,14 +188,6 @@ async function export_voyage_report() {
     grid-column: 2 / 4;
 }
 
-textarea {
-    border: 1px solid black;
-    width: 100%;
-    box-sizing: border-box;
-    height: 20vh;
-    font-family: 'Courier New', Courier, monospace;
-    overflow-x: scroll;
-}
 
 input {
     height: 1em;

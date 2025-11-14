@@ -30,7 +30,8 @@
       "resource/"
     ],
     "externalBin": [
-      "binaries/report_gen/cli"
+      "binaries/report_gen/cli",
+      "binaries/report_gen/average"
     ],
     "icon": [
       "icons/32x32.png",

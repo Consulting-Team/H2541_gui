@@ -8,11 +8,24 @@ fn greet(name: &str) -> String {
     format!("Hello, {}! You've been greeted from Rust!", name)
 }
 
+// #[tauri::command]
+// async fn export_daily_report(app: tauri::AppHandle, window: tauri::Window, input: &str) -> Result<(), String> {
+
+//     let sidecar_command = app
+//         .shell()
+//         .sidecar("cli")
+//         .map_err(|e| e.to_string())?
+//         .args(["-s", input, "-t", "voyage"]);
+
+//     Ok(())
+// }
+
 #[tauri::command]
-async fn export_voyage_report(
+async fn export_report(
     app: AppHandle,
     window: WebviewWindow,
     input: &str,
+    repo_type: &str,
 ) -> Result<String, String> {
     app.emit("onProgress", true).expect("failed to emit event.");
 
@@ -20,7 +33,7 @@ async fn export_voyage_report(
         .shell()
         .sidecar("cli")
         .map_err(|e| e.to_string())?
-        .args(["-s", input]);
+        .args(["-s", input, "-t", repo_type]);
     // println!("{}", "-".repeat(50));
 
     let (mut rx, mut child) = sidecar_command.spawn().expect("Failed to spawn side car.");
@@ -71,7 +84,7 @@ pub fn run() {
         .plugin(tauri_plugin_dialog::init())
         // .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_shell::init())
-        .invoke_handler(tauri::generate_handler![greet, export_voyage_report])
+        .invoke_handler(tauri::generate_handler![greet, export_report])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

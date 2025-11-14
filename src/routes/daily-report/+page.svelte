@@ -3,10 +3,11 @@ import { invoke } from "@tauri-apps/api/core";
 import { save } from '@tauri-apps/plugin-dialog';
 import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 import YAML from 'yaml';
-import ExportBtn from '$lib/export_btn.svelte';
+import ExportBtn from '$lib/exportBtn.svelte';
 import { gmt_list } from "$lib/data";
+import MsgPanel from "$lib/msgPanel.svelte";
 
-// const appWebView = getCurrentWebviewWindow();
+const appWebView = getCurrentWebviewWindow();
 let msg = $state('');
 // cli 인풋 데이터 -> 로컬스토리지에 저장된 정보 로드
 let port_departure = $state(localStorage.getItem('port_departure_daily') || 'PortA');
@@ -17,8 +18,12 @@ let lng_density = $state(localStorage.getItem('lng_density_daily') || '447.093')
 let bog_density = $state(localStorage.getItem('bog_density_daily') || '0.779');
 let bog_lhv = $state(localStorage.getItem('bog_lhv_daily') || '45400');
 
-/** @type {HTMLTextAreaElement} */
-let textArea;
+// /** @type {HTMLTextAreaElement} */
+// let textArea;
+/** @type {MsgPanel}*/
+let msgPanel;
+/** @type {ExportBtn} */
+let btn;
 
 $effect(() => {
     localStorage.setItem('port_departure_daily', port_departure);
@@ -28,6 +33,15 @@ $effect(() => {
     localStorage.setItem('lng_density_daily', lng_density);
     localStorage.setItem('bog_density_daily', bog_density);
     localStorage.setItem('bog_lhv_daily', bog_lhv);
+});
+
+appWebView.listen('message', (event) => {
+    msg = msg.concat(`${event.payload}\n`);
+    // console.log(event.payload);
+
+    // scroll down
+    // textArea.scrollTop = textArea.scrollHeight;
+    // msgPanel.toBottom();
 });
 
 /**
@@ -45,7 +59,7 @@ function format(dt) {
     return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 }
 
-async function export_daily_report() {
+async function exportDailyReport() {
     //! daily report 출력 -> cli 명령 실행
     // 리포트 출력 폴더 선택
     const output_file = await save({
@@ -55,7 +69,7 @@ async function export_daily_report() {
                 extensions: ['xlsx'],
             },
         ],
-        defaultPath: "C:\\Users\\H5495\\Documents\\report",
+        defaultPath: "C:\\Users\\H5495\\Documents\\daily_report",
     });
 
     if (output_file === null) {
@@ -68,7 +82,7 @@ async function export_daily_report() {
     const input = YAML.stringify({
         port_departure: port_departure,
         port_arrival: port_arrival,
-        tz_depzrture: tz_arrival,
+        tz_departure: tz_arrival,
         tz_arrival: tz_arrival,
         departure: format(departure),
         arrival: format(arrival),
@@ -79,7 +93,20 @@ async function export_daily_report() {
     });
 
     msg = input;
-    console.log(input);
+    btn.deactivateBtn();
+
+    invoke('export_report', {input: input, repoType: "daily"})
+        .then(msg => {
+            console.log(msg);
+        })
+        .catch(err => {
+            console.error(err);
+            alert(err);
+        })
+        .finally(() => {
+            btn.activateBtn();
+            // textArea.scrollTop = textArea.scrollHeight;
+        })
 }
 </script>
 
@@ -87,11 +114,11 @@ async function export_daily_report() {
     <h1>Daily Report</h1>
 
     <div class="input-panel">
-        <span class="item-title">Departure port</span>
+        <span class="item-title">Departure Port</span>
         <span></span>
         <input type="text" bind:value={port_departure}>
 
-        <span class="item-title">Arrival port</span>
+        <span class="item-title">Arrival Port</span>
         <span></span>
         <input type="text" bind:value={port_arrival}>
 
@@ -125,11 +152,11 @@ async function export_daily_report() {
         </div>
 
         <div class="export-btn-area">
-            <ExportBtn action={export_daily_report}></ExportBtn>
+            <ExportBtn bind:this={btn} action={exportDailyReport}></ExportBtn>
         </div>
     </div>
 
-    <textarea bind:this={textArea} bind:value={msg}></textarea>
+    <MsgPanel bind:this={msgPanel} bind:msg={msg}></MsgPanel>
 </article>
 
 <style>

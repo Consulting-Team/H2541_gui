@@ -8,10 +8,8 @@ let showModal = $state(false);
 
 listen('onProgress', event => {
     if (event.payload) {
-        console.log('on processing...');
         showModal = true;
     } else {
-        console.log('completed');
         showModal = false;
     }
 });

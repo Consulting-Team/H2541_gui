@@ -10,7 +10,11 @@ export function closeModal() {
 }
 
 $effect(() => {
-    if (showModal) dialog.showModal();
+    if (showModal) {
+        dialog.showModal();
+    } else {
+        dialog.close();
+    }
 });
 
 </script>
