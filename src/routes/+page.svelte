@@ -1,10 +1,13 @@
 <script>
   import VGCi from '$lib/VG_BIG.png';
+  import HOCi from '$lib/HO_CI.svg';
 </script>
 
 <main class="container">
-  <!-- svelte-ignore a11y_img_redundant_alt -->
-  <img src={VGCi} width="90%" alt="Not available image.">
+  <div class="img-panel">
+    <img src={VGCi} width="80%" alt="Not available">
+    <img src={HOCi} width="80%" alt="Not available">
+  </div>
 </main>
 
 <style>
@@ -25,7 +28,12 @@
 }
 
 .container {
-  margin-top: 15vh;
+  display: flex;
+  align-items: center;
+}
+
+.img-panel > img {
+  margin: 5vh 0;
 }
 
 /* .container {

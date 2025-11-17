@@ -32,7 +32,7 @@ class MenuItem {
 
 let home = new MenuItem('Home', '/');
 let voyage = new MenuItem('Voyage Report', '/voyage-report');
-let daily = new MenuItem('Daily Report', '/daily-report');
+let daily = new MenuItem('Daily Report', '/daily-report2');
 </script>
 
 <ul class="menu">
@@ -49,6 +49,7 @@ let daily = new MenuItem('Daily Report', '/daily-report');
 
 .menu-item {
     display: block;
+    color: black;
     box-sizing: border-box;
     width: 100%;
     line-height: 2.5em;
@@ -58,7 +59,8 @@ let daily = new MenuItem('Daily Report', '/daily-report');
 
 .menu-item.selected {
     border-radius: 0.5em;
-    background-color: coral;
+    /* background-color: coral; */
+    background-color: rgb(251, 181, 132);
     font-weight: bold;
 }
 

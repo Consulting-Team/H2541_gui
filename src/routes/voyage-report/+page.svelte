@@ -19,7 +19,6 @@ let port_departure = $state(localStorage.getItem('port_departure') || 'PortA');
 let port_arrival = $state(localStorage.getItem('port_arrival') || 'PortB');
 let tz_departure = $state(localStorage.getItem('tz_departure') || 'GMT+0');
 let tz_arrival = $state(localStorage.getItem('tz_arrival') || 'GMT+0');
-// todo: 기본 값 현재 시간으로
 let dt_departure = $state(localStorage.getItem('dt_departure') || datetime['past']);
 let dt_arrival = $state(localStorage.getItem('dt_arrival') || datetime['current']);
 let lng_density = $state(localStorage.getItem('lng_density') || '447.093');
@@ -67,50 +66,29 @@ async function getAverage(item) {
     msg = '';
 
     invoke('get_average', {input: input, item: item})
-        .then(msg => {
-            const str = `{${msg}}`
-            console.log(msg);
+        .then(value => {
+            switch (item) {
+                case "LNG Density":
+                    lng_density = Number(value).toFixed(3);
+                    break;
+                case "Average BOG Density":
+                    bog_density = Number(value).toFixed(3);
+                    break;
+                case "Average BOG LHV":
+                    bog_lhv = Number(value).toFixed(2);
+                    break;
+            }
         })
         .catch(err => {
+            msg = err;
             console.error(err);
             alert(err);
         })
         .finally(() => {
             btn.activateBtn();
             showModal = false;
-            // textArea.scrollTop = textArea.scrollHeight;
         })
 }
-
-// async function getLNGDensity() {
-//     const input = YAML.stringify({
-//         port_departure: port_departure,
-//         port_arrival: port_arrival,
-//         tz_departure: tz_departure,
-//         tz_arrival: tz_arrival,
-//         departure: dt_departure,
-//         arrival: dt_arrival,
-//         lng_density: Number(lng_density),
-//         bog_density: Number(bog_density),
-//         bog_lhv: Number(bog_lhv),
-//         output_file: "",
-//     });
-
-//     msg = '';
-
-//     invoke('get_average', {input: input, item: "LNG Density"})
-//         .then(msg => {
-//             console.log(msg);
-//         })
-//         .catch(err => {
-//             console.error(err);
-//             alert(err);
-//         })
-//         .finally(() => {
-//             btn.activateBtn();
-//             // textArea.scrollTop = textArea.scrollHeight;
-//         })
-// }
 
 async function exportVoyageReport() {
     //! voyage report 출력 -> cli 명령 실행
@@ -153,6 +131,7 @@ async function exportVoyageReport() {
             console.log(msg);
         })
         .catch(err => {
+            msg = err;
             console.error(err);
             alert(err);
         })
@@ -194,22 +173,22 @@ async function exportVoyageReport() {
        <span class="item-title">LNG Density</span>
        <span class="item-title">kg/m3</span>
        <div class="input-btn-area">
-           <input type="number" bind:value={lng_density}>
-           <button onclick={() => getAverage("LNG Density")}>auto</button>
+           <input id="LNG Density" type="number" bind:value={lng_density}>
+           <button onclick={() => getAverage("LNG Density")}>load</button>
        </div>
 
        <span class="item-title">BOG Density</span>
        <span class="item-title">kg/m3</span>
        <div class="input-btn-area">
            <input type="number" bind:value={bog_density}>
-           <button>auto</button>
+           <button onclick={() => getAverage("Average BOG Density")}>load</button>
        </div>
 
        <span class="item-title">BOG LHV</span>
        <span class="item-title">kJ/kg</span>
        <div class="input-btn-area">
            <input type="number" bind:value={bog_lhv}>
-           <button>auto</button>
+           <button onclick={() => getAverage("Average BOG LHV")}>load</button>
        </div>
 
        <div class="export-btn-area">
