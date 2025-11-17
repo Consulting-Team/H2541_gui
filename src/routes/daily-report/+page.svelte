@@ -6,9 +6,12 @@ import YAML from 'yaml';
 import ExportBtn from '$lib/exportBtn.svelte';
 import { gmt_list } from "$lib/data";
 import MsgPanel from "$lib/msgPanel.svelte";
+import Modal from "../modal.svelte";
 
 const appWebView = getCurrentWebviewWindow();
+
 let msg = $state('');
+let showModal = $state(false);
 // cli 인풋 데이터 -> 로컬스토리지에 저장된 정보 로드
 let port_departure = $state(localStorage.getItem('port_departure_daily') || 'PortA');
 let port_arrival = $state(localStorage.getItem('port_arrival_daily') || 'PortB');
@@ -76,6 +79,8 @@ async function exportDailyReport() {
         return;
     }
 
+    showModal = true;
+
     let arrival = new Date(`${dt_arrival} 12:00:00`);
     let departure = new Date(arrival.getTime() - 24 * 60 * 60 * 1000)
 
@@ -105,7 +110,7 @@ async function exportDailyReport() {
         })
         .finally(() => {
             btn.activateBtn();
-            // textArea.scrollTop = textArea.scrollHeight;
+            showModal = false;
         })
 }
 </script>
@@ -160,6 +165,8 @@ async function exportDailyReport() {
         <MsgPanel bind:this={msgPanel} bind:msg={msg}></MsgPanel>
     </div>
 </article>
+
+<Modal bind:showModal={showModal}></Modal>
 
 <style>
 .input-btn-area {

@@ -1,18 +1,18 @@
 <script>
 import Menu from "./menu.svelte";
-import { listen } from "@tauri-apps/api/event";
-import Modal from "./modal.svelte";
+// import { listen } from "@tauri-apps/api/event";
+// import Modal from "./modal.svelte";
 
 let { children } = $props();
-let showModal = $state(false);
+// let showModal = $state(false);
 
-listen('onProgress', event => {
-    if (event.payload) {
-        showModal = true;
-    } else {
-        showModal = false;
-    }
-});
+// listen('onProgress', event => {
+//     if (event.payload) {
+//         showModal = true;
+//     } else {
+//         showModal = false;
+//     }
+// });
 </script>
 
 <main>
@@ -22,7 +22,7 @@ listen('onProgress', event => {
     {@render children()}
 </main>
 
-<Modal bind:showModal={showModal}></Modal>
+<!-- <Modal bind:showModal={showModal}></Modal> -->
 
 <style>
 :global(html, body) {

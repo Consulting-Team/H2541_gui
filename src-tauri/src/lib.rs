@@ -22,8 +22,13 @@ fn greet(name: &str) -> String {
 // }
 
 #[tauri::command]
-async fn get_average(app: AppHandle, window: WebviewWindow, input: &str, item: &str) -> Result<f64, String> {
-    app.emit("onProgress", true).expect("failed to emit event.");
+async fn get_average(
+    app: AppHandle,
+    window: WebviewWindow,
+    input: &str,
+    item: &str,
+) -> Result<f64, String> {
+    // app.emit("onProgress", true).expect("failed to emit event.");
 
     let sidecar_command = app
         .shell()
@@ -33,6 +38,7 @@ async fn get_average(app: AppHandle, window: WebviewWindow, input: &str, item: &
 
     let (mut rx, mut child) = sidecar_command.spawn().expect("Failed to spawn side car.");
     let re = Regex::new(r#"\("([^"]*)"\)"#).unwrap();
+    let mut value = 0.0;
 
     while let Some(event) = rx.recv().await {
         if let CommandEvent::Stdout(line_bytes) = &event {
@@ -40,11 +46,18 @@ async fn get_average(app: AppHandle, window: WebviewWindow, input: &str, item: &
             let line = line.trim();
 
             println!("{line}");
+            let split = line.split(":").collect::<Vec<_>>();
+            let str_value = split
+                .get(1)
+                .ok_or(format!("Failed to parse {} to object.", line))?
+                .trim();
+            value = str_value
+                .parse::<f64>()
+                .map_err(|e| format!("Failed to parse {str_value} to f64. {e}"))?;
+
             window
                 .emit("message", Some(format!("'{}'", line)))
                 .expect("Failed to emit event to message.");
-            // child.write("message from Rust\n".as_bytes()).unwrap();
-            // child.write("message from Rust\n".as_bytes()).map_err(|e| e.to_string())?;
             child
                 .write("message from Rust\n".as_bytes())
                 .expect("Failed to write message to child.");
@@ -58,17 +71,17 @@ async fn get_average(app: AppHandle, window: WebviewWindow, input: &str, item: &
                 None => line,
             };
 
-            app.emit("onProgress", false)
-                .expect("Failed to emit event to onProgress.");
+            // app.emit("onProgress", false)
+            //     .expect("Failed to emit event to onProgress.");
 
             Err(msg)?
         }
     }
 
-    app.emit("onProgress", false)
-        .expect("Failed to emit event to onProgress.");
+    // app.emit("onProgress", false)
+    //     .expect("Failed to emit event to onProgress.");
 
-  Ok(0.0)
+    Ok(value)
 }
 
 #[tauri::command]
