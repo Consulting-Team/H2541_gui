@@ -1,8 +1,10 @@
 <script>
+  import VGCi from '$lib/VG_BIG.png';
 </script>
 
 <main class="container">
-  <h1>test</h1>
+  <!-- svelte-ignore a11y_img_redundant_alt -->
+  <img src={VGCi} width="90%" alt="Not available image.">
 </main>
 
 <style>
@@ -22,6 +24,10 @@
   -webkit-text-size-adjust: 100%;
 }
 
+.container {
+  margin-top: 15vh;
+}
+
 /* .container {
   margin: 0;
   padding-top: 10vh;
@@ -30,9 +36,5 @@
   justify-content: center;
   text-align: center;
 } */
-
-h1 {
-  text-align: center;
-}
 
 </style>

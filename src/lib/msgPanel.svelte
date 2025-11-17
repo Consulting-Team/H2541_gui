@@ -8,7 +8,6 @@
     }
 
     $effect(() => {
-        // console.log(msg);
         console.log(typeof(msg));
         toBottom();
     });
@@ -21,8 +20,8 @@
 textarea {
     border: 1px solid black;
     width: 100%;
+    height: 100%;
     box-sizing: border-box;
-    height: 20vh;
     font-family: 'Courier New', Courier, monospace;
     /* overflow-x: scroll; */
     overflow-y: scroll;

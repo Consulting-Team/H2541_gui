@@ -92,7 +92,7 @@ async function exportDailyReport() {
         output_file: output_file,
     });
 
-    msg = input;
+    msg = '';
     btn.deactivateBtn();
 
     invoke('export_report', {input: input, repoType: "daily"})
@@ -156,7 +156,9 @@ async function exportDailyReport() {
         </div>
     </div>
 
-    <MsgPanel bind:this={msgPanel} bind:msg={msg}></MsgPanel>
+    <div style="height: 33vh; background-color: red;">
+        <MsgPanel bind:this={msgPanel} bind:msg={msg}></MsgPanel>
+    </div>
 </article>
 
 <style>
@@ -193,15 +195,6 @@ async function exportDailyReport() {
     width: 100%;
     grid-row: 9;
     grid-column: 2 / 4;
-}
-
-textarea {
-    border: 1px solid black;
-    width: 100%;
-    box-sizing: border-box;
-    height: 20vh;
-    font-family: 'Courier New', Courier, monospace;
-    overflow-x: scroll;
 }
 
 input {

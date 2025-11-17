@@ -6,6 +6,9 @@ import YAML from 'yaml';
 import ExportBtn from '$lib/exportBtn.svelte';
 import { gmt_list } from "$lib/data";
 import MsgPanel from "$lib/msgPanel.svelte";
+import { getCurrentDatetime } from "$lib/common";
+
+console.log(getCurrentDatetime());
 
 const appWebView = getCurrentWebviewWindow();
 let msg = $state('');
@@ -14,6 +17,7 @@ let port_departure = $state(localStorage.getItem('port_departure') || 'PortA');
 let port_arrival = $state(localStorage.getItem('port_arrival') || 'PortB');
 let tz_departure = $state(localStorage.getItem('tz_departure') || 'GMT+0');
 let tz_arrival = $state(localStorage.getItem('tz_arrival') || 'GMT+0');
+// todo: 기본 값 현재 시간으로
 let dt_departure = $state(localStorage.getItem('dt_departure') || '');
 let dt_arrival = $state(localStorage.getItem('dt_arrival') || '');
 let lng_density = $state(localStorage.getItem('lng_density') || '447.093');
@@ -39,12 +43,37 @@ $effect(() => {
 
 appWebView.listen('message', (event) => {
     msg = msg.concat(`${event.payload}\n`);
-    // console.log(event.payload);
-
-    // scroll down
-    // textArea.scrollTop = textArea.scrollHeight;
-    // msgPanel.toBottom();
 });
+
+async function getLNGDensity() {
+    const input = YAML.stringify({
+        port_departure: port_departure,
+        port_arrival: port_arrival,
+        tz_departure: tz_departure,
+        tz_arrival: tz_arrival,
+        departure: dt_departure,
+        arrival: dt_arrival,
+        lng_density: Number(lng_density),
+        bog_density: Number(bog_density),
+        bog_lhv: Number(bog_lhv),
+        output_file: "",
+    });
+
+    msg = '';
+
+    invoke('get_average', {input: input, item: "LNG Density"})
+        .then(msg => {
+            console.log(msg);
+        })
+        .catch(err => {
+            console.error(err);
+            alert(err);
+        })
+        .finally(() => {
+            btn.activateBtn();
+            // textArea.scrollTop = textArea.scrollHeight;
+        })
+}
 
 async function exportVoyageReport() {
     //! voyage report 출력 -> cli 명령 실행
@@ -127,7 +156,7 @@ async function exportVoyageReport() {
         <span class="item-title">kg/m3</span>
         <div class="input-btn-area">
             <input type="number" bind:value={lng_density}>
-            <button>auto</button>
+            <button onclick={getLNGDensity}>auto</button>
         </div>
 
         <span class="item-title">BOG Density</span>
@@ -148,8 +177,9 @@ async function exportVoyageReport() {
             <ExportBtn bind:this={btn} action={exportVoyageReport}></ExportBtn>
         </div>
     </div>
-
-     <MsgPanel bind:this={msgPanel} bind:msg={msg}></MsgPanel>
+    <div style="height: 28vh; background-color: red;">
+        <MsgPanel bind:this={msgPanel} bind:msg={msg}></MsgPanel>
+    </div>
  </article>
 
  <style>
@@ -216,4 +246,5 @@ article {
     width: 100%;
     padding: 1em 3vw;
 }
+
 </style>
