@@ -68,12 +68,16 @@ onMount(() => {
 
 .menu-item.selected {
     border-radius: 0.5em;
-    /* background-color: coral; */
     background-color: rgb(251, 181, 132);
     font-weight: bold;
 }
 
 .menu-item:hover {
     font-weight: bold;
+    text-shadow: 0px 0px 5px gray;
 }
+
+/* .menu-item:hover::after {
+    content: "\00a0\00a0👈";
+} */
 </style>
