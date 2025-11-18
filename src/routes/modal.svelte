@@ -9,6 +9,11 @@ let dialog;
 //     dialog.close();
 // }
 
+/** @param {Event} event */
+function cancelHandle(event) {
+    event.preventDefault();
+}
+
 $effect(() => {
     if (showModal) {
         dialog.showModal();
@@ -19,7 +24,7 @@ $effect(() => {
 
 </script>
 
-<dialog bind:this={dialog} onclose={() => (showModal = false)}>
+<dialog bind:this={dialog} onclose={() => (showModal = false)} oncancel={cancelHandle}>
     <h1>On progress</h1>
     <progress></progress>
 </dialog>

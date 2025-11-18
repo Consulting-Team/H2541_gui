@@ -8,6 +8,7 @@ import { gmt_list } from "$lib/data";
 import MsgPanel from "$lib/msgPanel.svelte";
 import { getCurrentDatetime } from "$lib/common";
 import Modal from "../modal.svelte";
+import { message } from "@tauri-apps/plugin-dialog";
 
 const datetime = getCurrentDatetime();
 const appWebView = getCurrentWebviewWindow();
@@ -127,13 +128,22 @@ async function exportVoyageReport() {
     btn.deactivateBtn();
 
     invoke('export_report', {input: input, repoType: "voyage"})
-        .then(msg => {
-            console.log(msg);
+        .then(async msg => {
+            // console.log(msg);
+            showModal = false;
+            await message('The voyage report was successfully exported.', {
+                title: "Export report",
+                kind: "info"
+            });
         })
-        .catch(err => {
+        .catch(async err => {
             msg = err;
-            console.error(err);
-            alert(err);
+            // console.error(err);
+            showModal = false;
+            await message(err, {
+                title: "Export report",
+                kind: "error"
+            });
         })
         .finally(() => {
             btn.activateBtn();
