@@ -4,10 +4,10 @@ let {showModal = $bindable()} = $props();
 /** @type {HTMLDialogElement} */
 let dialog;
 
-export function closeModal() {
-    showModal = false;
-    dialog.close();
-}
+// export function closeModal() {
+//     showModal = false;
+//     dialog.close();
+// }
 
 $effect(() => {
     if (showModal) {
@@ -20,7 +20,12 @@ $effect(() => {
 </script>
 
 <dialog bind:this={dialog} onclose={() => (showModal = false)}>
-    <h1>Hello this is a modal page.</h1>
-    <progress value="0.5"></progress>
-    <button onclick={closeModal}>close</button>
+    <h1>On progress</h1>
+    <progress></progress>
 </dialog>
+
+<style>
+    dialog {
+        width: 50vh;
+    }
+</style>

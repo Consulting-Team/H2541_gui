@@ -6,8 +6,10 @@ import YAML from 'yaml';
 import ExportBtn from '$lib/exportBtn.svelte';
 import { gmt_list } from "$lib/data";
 import MsgPanel from "$lib/msgPanel.svelte";
+import { getCurrentDatetime } from "$lib/common";
 import Modal from "../modal.svelte";
 
+const datetime = getCurrentDatetime();
 const appWebView = getCurrentWebviewWindow();
 
 let msg = $state('');
@@ -16,15 +18,13 @@ let showModal = $state(false);
 let port_departure = $state(localStorage.getItem('port_departure_daily') || 'PortA');
 let port_arrival = $state(localStorage.getItem('port_arrival_daily') || 'PortB');
 let tz_departure = $state(localStorage.getItem('tz_departure_daily') || 'GMT+0');
-let tz_arrival = $state(localStorage.getItem('tz_departure_daily') || 'GMT+0');
-let dt_departure = $state(localStorage.getItem('dt_arrival_daily') || '');
-let dt_arrival = $state(localStorage.getItem('dt_arrival_daily') || '');
+let tz_arrival = $state(localStorage.getItem('tz_arrival_daily') || 'GMT+0');
+let dt_departure = $state(localStorage.getItem('dt_departure_daily') || datetime['past']);
+let dt_arrival = $state(localStorage.getItem('dt_arrival_daily') || datetime['current']);
 let lng_density = $state(localStorage.getItem('lng_density_daily') || '447.093');
 let bog_density = $state(localStorage.getItem('bog_density_daily') || '0.779');
 let bog_lhv = $state(localStorage.getItem('bog_lhv_daily') || '45400');
 
-// /** @type {HTMLTextAreaElement} */
-// let textArea;
 /** @type {MsgPanel}*/
 let msgPanel;
 /** @type {ExportBtn} */
@@ -44,11 +44,6 @@ $effect(() => {
 
 appWebView.listen('message', (event) => {
     msg = msg.concat(`${event.payload}\n`);
-    // console.log(event.payload);
-
-    // scroll down
-    // textArea.scrollTop = textArea.scrollHeight;
-    // msgPanel.toBottom();
 });
 
 /** @param {string} item */
@@ -85,6 +80,7 @@ async function getAverage(item) {
             }
         })
         .catch(err => {
+            msg = err;
             console.error(err);
             alert(err);
         })
@@ -94,23 +90,8 @@ async function getAverage(item) {
         })
 }
 
-/**
- * @param {Date} dt UTC datetime
- * @returns {string} formatted string
-*/
-function format(dt) {
-    const year = dt.getFullYear();
-    const month = String(dt.getMonth() + 1).padStart(2, '0');
-    const day = String(dt.getDate()).padStart(2, '0');
-    const hours = String(dt.getHours()).padStart(2, '0');
-    const minutes = String(dt.getMinutes()).padStart(2, '0');
-    const seconds = String(dt.getSeconds()).padStart(2, '0');
-
-    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
-}
-
-async function exportDailyReport() {
-    //! daily report 출력 -> cli 명령 실행
+async function exportVoyageReport() {
+    //! voyage report 출력 -> cli 명령 실행
     // 리포트 출력 폴더 선택
     const output_file = await save({
         filters: [
@@ -128,16 +109,14 @@ async function exportDailyReport() {
 
     showModal = true;
 
-    let arrival = new Date(`${dt_arrival} 12:00:00`);
-    let departure = new Date(arrival.getTime() - 24 * 60 * 60 * 1000)
-
+    // report_gen 입력
     const input = YAML.stringify({
         port_departure: port_departure,
         port_arrival: port_arrival,
-        tz_departure: tz_arrival,
+        tz_departure: tz_departure,
         tz_arrival: tz_arrival,
-        departure: format(departure),
-        arrival: format(arrival),
+        departure: dt_departure,
+        arrival: dt_arrival,
         lng_density: Number(lng_density),
         bog_density: Number(bog_density),
         bog_lhv: Number(bog_lhv),
@@ -152,6 +131,7 @@ async function exportDailyReport() {
             console.log(msg);
         })
         .catch(err => {
+            msg = err;
             console.error(err);
             alert(err);
         })
@@ -163,54 +143,61 @@ async function exportDailyReport() {
 </script>
 
 <article class="container">
-    <h1>Daily Report</h1>
+   <h1>Daily Report</h1>
 
-    <div class="input-panel">
-        <span class="item-title">Departure Port</span>
-        <span></span>
-        <input type="text" bind:value={port_departure}>
+   <div class=input-panel>
+       <span class="item-title">Departure Port</span>
+       <span></span>
+       <input type="text" bind:value={port_departure}>
 
-        <span class="item-title">Arrival Port</span>
-        <span></span>
-        <input type="text" bind:value={port_arrival}>
+       <span class="item-title">Arrival Port</span>
+       <span></span>
+       <input type="text" bind:value={port_arrival}>
 
-        <span class="item-title">Datetime</span>
-        <select name="tz-daily" bind:value={tz_arrival}>
-            {#each gmt_list as gmt}
-                <option value={gmt}>{gmt}</option>
-            {/each}
-        </select>
-        <input name="dt-daily" type="date" bind:value={dt_arrival}>
+       <span class="item-title">Departure</span>
+       <select name="tz-departure" bind:value={tz_departure}>
+           {#each gmt_list as gmt}
+               <option value={gmt}>{gmt}</option>
+           {/each}
+       </select>
+       <input name="dt-departure" type="datetime" bind:value={dt_departure}>
 
-        <span class="item-title">LNG Density</span>
-        <span class="item-title">kg/m3</span>
-        <div class="input-btn-area">
-            <input type="number" bind:value={lng_density}>
-            <button>auto</button>
-        </div>
+       <label for="dt-arrival" class="item-title">Arrival</label>
+       <select name="tz-arrival" bind:value={tz_arrival}>
+           {#each gmt_list as gmt}
+               <option value={gmt}>{gmt}</option>
+           {/each}
+       </select>
+       <input name="tz-arrival" type="datetime" bind:value={dt_arrival}>
 
-        <span class="item-title">BOG Density</span>
-        <span class="item-title">kg/m3</span>
-        <div class="input-btn-area">
-            <input type="number" bind:value={bog_density}>
-            <button>auto</button>
-        </div>
+       <span class="item-title">LNG Density</span>
+       <span class="item-title">kg/m3</span>
+       <div class="input-btn-area">
+           <input id="LNG Density" type="number" bind:value={lng_density}>
+           <button onclick={() => getAverage("LNG Density")}>load</button>
+       </div>
 
-        <span class="item-title">BOG LHV</span>
-        <span class="item-title">kJ/kg</span>
-        <div class="input-btn-area">
-            <input type="number" bind:value={bog_lhv}>
-            <button>auto</button>
-        </div>
+       <span class="item-title">BOG Density</span>
+       <span class="item-title">kg/m3</span>
+       <div class="input-btn-area">
+           <input type="number" bind:value={bog_density}>
+           <button onclick={() => getAverage("Average BOG Density")}>load</button>
+       </div>
 
-        <div class="export-btn-area">
-            <ExportBtn bind:this={btn} action={exportDailyReport}></ExportBtn>
-        </div>
-    </div>
+       <span class="item-title">BOG LHV</span>
+       <span class="item-title">kJ/kg</span>
+       <div class="input-btn-area">
+           <input type="number" bind:value={bog_lhv}>
+           <button onclick={() => getAverage("Average BOG LHV")}>load</button>
+       </div>
 
-    <div style="height: 33vh; background-color: red;">
-        <MsgPanel bind:this={msgPanel} bind:msg={msg}></MsgPanel>
-    </div>
+       <div class="export-btn-area">
+           <ExportBtn bind:this={btn} action={exportVoyageReport}></ExportBtn>
+       </div>
+   </div>
+   <div style="height: 28vh; background-color: red;">
+       <MsgPanel bind:this={msgPanel} bind:msg={msg}></MsgPanel>
+   </div>
 </article>
 
 <Modal bind:showModal={showModal}></Modal>
@@ -251,6 +238,7 @@ async function exportDailyReport() {
     grid-column: 2 / 4;
 }
 
+
 input {
     height: 1em;
 }
@@ -278,4 +266,5 @@ article {
     width: 100%;
     padding: 1em 3vw;
 }
+
 </style>

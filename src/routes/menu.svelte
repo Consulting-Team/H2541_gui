@@ -1,4 +1,6 @@
 <script>
+    import { onMount } from "svelte";
+
 class MenuItem {
     selected = $state(false);
     /**
@@ -32,7 +34,11 @@ class MenuItem {
 
 let home = new MenuItem('Home', '/');
 let voyage = new MenuItem('Voyage Report', '/voyage-report');
-let daily = new MenuItem('Daily Report', '/daily-report2');
+let daily = new MenuItem('Daily Report', '/daily-report');
+
+onMount(() => {
+    home.select();
+});
 </script>
 
 <ul class="menu">
