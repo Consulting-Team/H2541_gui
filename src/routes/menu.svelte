@@ -14,7 +14,7 @@ class MenuItem {
     }
 
     select() {
-        let menuItems = [home, voyage, daily];
+        // let menuItems = [home, voyage, daily, test];
         Object.values(menuItems).forEach(menuItem => {
             if (this.title != menuItem.title) {
                 menuItem.selected = false;
@@ -32,19 +32,22 @@ class MenuItem {
     }
 }
 
-let home = new MenuItem('Home', '/');
-let voyage = new MenuItem('Voyage Report', '/voyage-report');
-let daily = new MenuItem('Daily Report', '/daily-report');
+const menuItems = [
+    new MenuItem('Home', '/'),
+    new MenuItem('Voyage Report', '/voyage-report'),
+    new MenuItem('Daily Report', '/daily-report'),
+    new MenuItem('Test', '/test-page')
+];
 
 onMount(() => {
-    home.select();
+    menuItems.at(0)?.select();
 });
 </script>
 
 <ul class="menu">
-    <li><a {...home} class={[home.getClass()]}>{home.title}</a></li>
-    <li><a {...voyage} class={[voyage.getClass()]}>{voyage.title}</a></li>
-    <li><a {...daily} class={[daily.getClass()]}>{daily.title}</a></li>
+    {#each menuItems as item}
+        <li><a {...item} class={[item.getClass()]}>{item.title}</a></li>
+    {/each}
 </ul>
 
 <style>

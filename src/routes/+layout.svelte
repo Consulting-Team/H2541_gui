@@ -1,7 +1,7 @@
 <script>
 import Menu from "./menu.svelte";
 // import { listen } from "@tauri-apps/api/event";
-import Modal from "./modal.svelte";
+// import Modal from "./modal.svelte";
 
 let { children } = $props();
 let showModal = $state(false);
@@ -18,12 +18,11 @@ let showModal = $state(false);
 <main>
     <nav class="nav-bar">
         <Menu></Menu>
-        <button onclick={() => showModal = !showModal}>modal</button>
     </nav>
     {@render children()}
 </main>
 
-<Modal bind:showModal={showModal}></Modal>
+<!-- <Modal bind:showModal={showModal}></Modal> -->
 
 <style>
 :global(html, body) {

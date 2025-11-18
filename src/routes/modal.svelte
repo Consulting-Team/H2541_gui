@@ -28,4 +28,7 @@ $effect(() => {
     dialog {
         width: 50vh;
     }
+    progress {
+        width: 100%;
+    }
 </style>
