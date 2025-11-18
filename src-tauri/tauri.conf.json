@@ -26,9 +26,10 @@
   "bundle": {
     "active": true,
     "targets": "all",
-    "resources": [
-      "resource/"
-    ],
+    "resources": {
+      "resource/" : "resource/",
+      "resource/env/.env_H2542": ".env"
+    },
     "externalBin": [
       "binaries/report_gen/cli",
       "binaries/report_gen/average"

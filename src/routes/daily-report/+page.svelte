@@ -8,6 +8,7 @@ import { gmt_list } from "$lib/data";
 import MsgPanel from "$lib/msgPanel.svelte";
 import { getCurrentDatetime } from "$lib/common";
 import Modal from "../modal.svelte";
+import { message } from "@tauri-apps/plugin-dialog";
 
 const datetime = getCurrentDatetime();
 const appWebView = getCurrentWebviewWindow();
@@ -66,7 +67,7 @@ async function getAverage(item) {
     msg = '';
 
     invoke('get_average', {input: input, item: item})
-        .then(value => {
+        .then(async value => {
             switch (item) {
                 case "LNG Density":
                     lng_density = Number(value).toFixed(3);
@@ -78,11 +79,21 @@ async function getAverage(item) {
                     bog_lhv = Number(value).toFixed(2);
                     break;
             }
+
+            showModal = false;
+            await message(`successfully loaded the ${item}.`, {
+                title: `Load the ${item}`,
+                kind: "info"
+            });
         })
-        .catch(err => {
+        .catch(async err => {
             msg = err;
-            console.error(err);
-            alert(err);
+
+            showModal = false;
+            await message(err, {
+                title: `Load the ${item}`,
+                kind: "error"
+            });
         })
         .finally(() => {
             btn.activateBtn();
@@ -127,13 +138,20 @@ async function exportVoyageReport() {
     btn.deactivateBtn();
 
     invoke('export_report', {input: input, repoType: "daily"})
-        .then(msg => {
-            console.log(msg);
+        .then(async msg => {
+            showModal = false;
+            await message('The voyage report was successfully exported.', {
+                title: "Export report",
+                kind: "info"
+            });
         })
-        .catch(err => {
+        .catch(async err => {
             msg = err;
-            console.error(err);
-            alert(err);
+            showModal = false;
+            await message(err, {
+                title: "Export report",
+                kind: "error"
+            });
         })
         .finally(() => {
             btn.activateBtn();

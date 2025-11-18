@@ -67,7 +67,7 @@ async function getAverage(item) {
     msg = '';
 
     invoke('get_average', {input: input, item: item})
-        .then(value => {
+        .then(async value => {
             switch (item) {
                 case "LNG Density":
                     lng_density = Number(value).toFixed(3);
@@ -79,11 +79,21 @@ async function getAverage(item) {
                     bog_lhv = Number(value).toFixed(2);
                     break;
             }
+
+            showModal = false;
+            await message(`successfully loaded the ${item}.`, {
+                title: `Load the ${item}`,
+                kind: "info"
+            });
         })
-        .catch(err => {
+        .catch(async err => {
             msg = err;
-            console.error(err);
-            alert(err);
+
+            showModal = false;
+            await message(err, {
+                title: `Load the ${item}`,
+                kind: "error"
+            });
         })
         .finally(() => {
             btn.activateBtn();
