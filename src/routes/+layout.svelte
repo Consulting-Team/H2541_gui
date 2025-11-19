@@ -4,7 +4,7 @@ import Menu from "./menu.svelte";
 // import Modal from "./modal.svelte";
 
 let { children } = $props();
-let showModal = $state(false);
+// let showModal = $state(false);
 
 // listen('onProgress', event => {
 //     if (event.payload) {

@@ -6,8 +6,8 @@ LNG Temperature CT1,IAS,CTS.CT1.TMP.LIQ/Meas1/PRIM,°C
 LNG Temperature CT2,IAS,CTS.CT2.TMP.LIQ/Meas1/PRIM,°C
 LNG Temperature CT3,IAS,CTS.CT3.TMP.LIQ/Meas1/PRIM,°C
 LNG Temperature CT4,IAS,CTS.CT4.TMP.LIQ/Meas1/PRIM,°C
-LNG Density,IAS,DRAFT_FWD/Meas1/PRIM,kg/m3
-Average BOG Density,IAS,DRAFT_FWD/Meas1/PRIM,kg/m3
+LNG Density,IAS,DM.DPR.AVG/Meas1/PRIM,kg/m3
+Average BOG Density,IAS,GA-0032/Meas1/PRIM,kg/m3
 Average BOG LHV,IAS,GA-003C/Meas1/PRIM,kJ/kg
 Vapor Header Pressure CT1,IAS,CTS.CT1.PRESS/Meas1/PRIM,mbarA
 Vapor Header Pressure CT2,IAS,CTS.CT2.PRESS/Meas1/PRIM,mbarA

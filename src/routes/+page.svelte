@@ -1,12 +1,12 @@
 <script>
-  import VGCi from '$lib/VG_BIG.png';
-  import HOCi from '$lib/HO_CI.svg';
+  // import VGCi from '$lib/VG_BIG.png';
+  // import HOCi from '$lib/HO_CI.svg';
 </script>
 
 <main class="container">
   <div class="img-panel">
-    <img src={VGCi} width="80%" alt="Not available">
-    <img src={HOCi} width="80%" alt="Not available">
+    <img src="/CI/VG_BIG.png" width="80%" alt="Not available">
+    <img src="/CI/HO_CI.svg" width="80%" alt="Not available">
   </div>
 </main>
 

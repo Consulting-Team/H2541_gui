@@ -36,7 +36,10 @@ const menuItems = [
     new MenuItem('Home', '/'),
     new MenuItem('Voyage Report', '/voyage-report'),
     new MenuItem('Daily Report', '/daily-report'),
-    new MenuItem('Test', '/test-page')
+    // new MenuItem('Test', '/test-page'),
+    // new MenuItem('Slug', '/test-page/slugA')
+    // new MenuItem('Voyage Report', '/report/voyage'),
+    // new MenuItem('Daily Report', '/report/daily'),
 ];
 
 onMount(() => {
