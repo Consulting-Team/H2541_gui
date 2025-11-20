@@ -18,7 +18,7 @@ IAS:
   # - FR029.02/AccValue/PRIM
   # - FV010.05/AccValue/PRIM
   - DM.DPR.AVG/Meas1/PRIM
-  - GA-003A/Meas1/PRIM
+  - GA-003C/Meas1/PRIM
   - GA-0032/Meas1/PRIM
 
 VDVBW:

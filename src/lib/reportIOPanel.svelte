@@ -48,6 +48,7 @@ appWebView.listen('message', (event) => {
 
 /** @param {string} item */
 async function getAverage(item) {
+    //! DB로부터 item에 해당하는 평균 값 로드
     showModal = true;
 
     const input = YAML.stringify({
@@ -75,7 +76,8 @@ async function getAverage(item) {
                     bog_density = Number(value).toFixed(3);
                     break;
                 case "Average BOG LHV":
-                    bog_lhv = Number(value).toFixed(2);
+                    // 단위 변환 MJ/kg --> kJ/kg
+                    bog_lhv = (1000.0 * Number(value)).toFixed(2);
                     break;
             }
 
