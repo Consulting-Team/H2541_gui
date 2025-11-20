@@ -40,7 +40,8 @@ const menuItems = [
     // new MenuItem('Slug', '/test-page/slugA')
     // new MenuItem('Voyage Report', '/report/voyage'),
     // new MenuItem('Daily Report', '/report/daily'),
-    new MenuItem('test-voyage', 'test-voyage'),
+    // new MenuItem('test-voyage', 'test-voyage'),
+    // new MenuItem('test-daily', 'test-daily'),
 ];
 
 onMount(() => {
