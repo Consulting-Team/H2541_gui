@@ -1,5 +1,5 @@
 <script>
-import Modal from "../modal.svelte";
+import Modal from "$lib/modal.svelte";
 import ReportIOPanel from "$lib/reportIOPanel.svelte";
 
 let showModal = $state(false);

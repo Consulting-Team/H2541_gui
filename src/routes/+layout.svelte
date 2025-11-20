@@ -1,5 +1,5 @@
 <script>
-import Menu from "./menu.svelte";
+import Menu from "$lib/menu.svelte";
 
 let { children } = $props();
 </script>

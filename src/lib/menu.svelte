@@ -1,5 +1,5 @@
 <script>
-    import { onMount } from "svelte";
+import { onMount } from "svelte";
 
 class MenuItem {
     selected = $state(false);
@@ -36,12 +36,6 @@ const menuItems = [
     new MenuItem('Home', '/'),
     new MenuItem('Voyage Report', '/voyage-report'),
     new MenuItem('Daily Report', '/daily-report'),
-    // new MenuItem('Test', '/test-page'),
-    // new MenuItem('Slug', '/test-page/slugA')
-    // new MenuItem('Voyage Report', '/report/voyage'),
-    // new MenuItem('Daily Report', '/report/daily'),
-    // new MenuItem('test-voyage', 'test-voyage'),
-    // new MenuItem('test-daily', 'test-daily'),
 ];
 
 onMount(() => {
@@ -81,8 +75,4 @@ onMount(() => {
     font-weight: bold;
     text-shadow: 0px 0px 5px gray;
 }
-
-/* .menu-item:hover::after {
-    content: "\00a0\00a0👈";
-} */
 </style>
