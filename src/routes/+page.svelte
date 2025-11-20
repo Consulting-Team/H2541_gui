@@ -11,7 +11,7 @@
 </main>
 
 <style>
-:root {
+/* :root {
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
   font-size: 13px;
   line-height: 24px;
@@ -25,7 +25,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
-}
+} */
 
 .container {
   display: flex;

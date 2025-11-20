@@ -1,21 +1,24 @@
 <script>
 import { invoke } from "@tauri-apps/api/core";
 import { save } from '@tauri-apps/plugin-dialog';
+import { message } from "@tauri-apps/plugin-dialog";
+import { gmt_list } from "$lib/data";
+import { getCurrentDatetime } from "$lib/common";
 import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
 import YAML from 'yaml';
 import ExportBtn from '$lib/exportBtn.svelte';
-import { gmt_list } from "$lib/data";
 import MsgPanel from "$lib/msgPanel.svelte";
-import { getCurrentDatetime } from "$lib/common";
-import Modal from "../modal.svelte";
-import { message } from "@tauri-apps/plugin-dialog";
 
+let {showModal = $bindable(), repoType} = $props();
 const datetime = getCurrentDatetime();
 const appWebView = getCurrentWebviewWindow();
 
+/** @type {ExportBtn} */
+let btn;
+/** @type {MsgPanel}*/
+let msgPanel;
 let msg = $state('');
-let showModal = $state(false);
-// cli 인풋 데이터 -> 로컬스토리지에 저장된 정보 로드
+
 let port_departure = $state(localStorage.getItem('port_departure') || 'PortA');
 let port_arrival = $state(localStorage.getItem('port_arrival') || 'PortB');
 let tz_departure = $state(localStorage.getItem('tz_departure') || 'GMT+0');
@@ -25,11 +28,6 @@ let dt_arrival = $state(localStorage.getItem('dt_arrival') || datetime['current'
 let lng_density = $state(localStorage.getItem('lng_density') || '447.093');
 let bog_density = $state(localStorage.getItem('bog_density') || '0.779');
 let bog_lhv = $state(localStorage.getItem('bog_lhv') || '45400');
-
-/** @type {MsgPanel}*/
-let msgPanel;
-/** @type {ExportBtn} */
-let btn;
 
 $effect(() => {
     localStorage.setItem('port_departure', port_departure);
@@ -101,8 +99,8 @@ async function getAverage(item) {
         })
 }
 
-async function exportVoyageReport() {
-    //! voyage report 출력 -> cli 명령 실행
+async function exportReport() {
+    //! report 출력 -> cli 명령 실행
     // 리포트 출력 폴더 선택
     const output_file = await save({
         filters: [
@@ -160,67 +158,63 @@ async function exportVoyageReport() {
             showModal = false;
         })
 }
+
 </script>
 
-<article class="container">
-   <h1>😄 Voyage Report</h1>
+<h1>😄 Voyage Report</h1>
+<div class=input-panel>
+    <span class="item-title item-label">Departure Port</span>
+    <span></span>
+    <input type="text" class="input-item" bind:value={port_departure}>
 
-   <div class=input-panel>
-       <span class="item-title item-label">Departure Port</span>
-       <span></span>
-       <input type="text" class="input-item" bind:value={port_departure}>
+    <span class="item-title item-label">Arrival Port</span>
+    <span></span>
+    <input type="text" class="input-item" bind:value={port_arrival}>
 
-       <span class="item-title item-label">Arrival Port</span>
-       <span></span>
-       <input type="text" class="input-item" bind:value={port_arrival}>
+    <span class="item-title item-label">Departure</span>
+    <select name="tz-departure" class="input-item" bind:value={tz_departure} tabindex="-1">
+        {#each gmt_list as gmt}
+            <option value={gmt} class="input-item">{gmt}</option>
+        {/each}
+    </select>
+    <input name="dt-departure" type="datetime" class="input-item" bind:value={dt_departure}>
 
-       <span class="item-title item-label">Departure</span>
-       <select name="tz-departure" class="input-item" bind:value={tz_departure} tabindex="-1">
-           {#each gmt_list as gmt}
-               <option value={gmt} class="input-item">{gmt}</option>
-           {/each}
-       </select>
-       <input name="dt-departure" type="datetime" class="input-item" bind:value={dt_departure}>
+    <label for="dt-arrival" class="item-title item-label">Arrival</label>
+    <select name="tz-arrival" class="input-item" bind:value={tz_arrival} tabindex="-1">
+        {#each gmt_list as gmt}
+            <option value={gmt} class="input-item">{gmt}</option>
+        {/each}
+    </select>
+    <input name="tz-arrival" type="datetime" class="input-item" bind:value={dt_arrival}>
 
-       <label for="dt-arrival" class="item-title item-label">Arrival</label>
-       <select name="tz-arrival" class="input-item" bind:value={tz_arrival} tabindex="-1">
-           {#each gmt_list as gmt}
-               <option value={gmt} class="input-item">{gmt}</option>
-           {/each}
-       </select>
-       <input name="tz-arrival" type="datetime" class="input-item" bind:value={dt_arrival}>
+    <span class="item-title item-label">LNG Density</span>
+    <span class="unit-item">kg/m3</span>
+    <div class="input-btn-area">
+        <input id="LNG Density" type="number" class="input-item" bind:value={lng_density}>
+        <button onclick={() => getAverage("LNG Density")} tabindex="-1">load</button>
+    </div>
 
-       <span class="item-title item-label">LNG Density</span>
-       <span class="unit-item">kg/m3</span>
-       <div class="input-btn-area">
-           <input id="LNG Density" type="number" class="input-item" bind:value={lng_density}>
-           <button onclick={() => getAverage("LNG Density")} tabindex="-1">load</button>
-       </div>
+    <span class="item-title item-label">BOG Density</span>
+    <span class="unit-item">kg/m3</span>
+    <div class="input-btn-area">
+        <input type="number" class="input-item" bind:value={bog_density}>
+        <button onclick={() => getAverage("Average BOG Density")} tabindex="-1">load</button>
+    </div>
 
-       <span class="item-title item-label">BOG Density</span>
-       <span class="unit-item">kg/m3</span>
-       <div class="input-btn-area">
-           <input type="number" class="input-item" bind:value={bog_density}>
-           <button onclick={() => getAverage("Average BOG Density")} tabindex="-1">load</button>
-       </div>
+    <span class="item-title item-label">BOG LHV</span>
+    <span class="unit-item">kJ/kg</span>
+    <div class="input-btn-area">
+        <input type="number" class="input-item" bind:value={bog_lhv}>
+        <button onclick={() => getAverage("Average BOG LHV")} tabindex="-1">load</button>
+    </div>
 
-       <span class="item-title item-label">BOG LHV</span>
-       <span class="unit-item">kJ/kg</span>
-       <div class="input-btn-area">
-           <input type="number" class="input-item" bind:value={bog_lhv}>
-           <button onclick={() => getAverage("Average BOG LHV")} tabindex="-1">load</button>
-       </div>
-
-       <div class="export-btn-area">
-           <ExportBtn bind:this={btn} action={exportVoyageReport}></ExportBtn>
-       </div>
-   </div>
-   <div style="height: 32vh; background-color: red;">
-       <MsgPanel bind:this={msgPanel} bind:msg={msg}></MsgPanel>
-   </div>
-</article>
-
-<Modal bind:showModal={showModal}></Modal>
+    <div class="export-btn-area">
+        <ExportBtn bind:this={btn} action={exportReport}></ExportBtn>
+    </div>
+</div>
+<div style="height: 32vh; background-color: red;">
+    <MsgPanel bind:this={msgPanel} bind:msg={msg}></MsgPanel>
+</div>
 
 <style>
 .input-btn-area {
@@ -306,11 +300,4 @@ select {
     box-shadow: 0 2px 2px rgba(0, 0, 0, 0.2);
     outline: none;
 }
-
-article {
-    box-sizing: border-box;
-    width: 100%;
-    padding: 1em 3vw;
-}
-
 </style>

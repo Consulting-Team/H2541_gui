@@ -161,59 +161,59 @@ async function exportVoyageReport() {
 </script>
 
 <article class="container">
-   <h1>Daily Report</h1>
+   <h1>😄 Daily Report</h1>
 
    <div class=input-panel>
-       <span class="item-title">Departure Port</span>
+       <span class="item-title item-label">Departure Port</span>
        <span></span>
-       <input type="text" bind:value={port_departure}>
+       <input type="text" class="input-item" bind:value={port_departure}>
 
-       <span class="item-title">Arrival Port</span>
+       <span class="item-title item-label">Arrival Port</span>
        <span></span>
-       <input type="text" bind:value={port_arrival}>
+       <input type="text" class="input-item" bind:value={port_arrival}>
 
-       <span class="item-title">Departure</span>
-       <select name="tz-departure" bind:value={tz_departure}>
+       <span class="item-title item-label">Departure</span>
+       <select name="tz-departure" class="input-item" bind:value={tz_departure} tabindex="-1">
            {#each gmt_list as gmt}
-               <option value={gmt}>{gmt}</option>
+               <option value={gmt} class="input-item">{gmt}</option>
            {/each}
        </select>
-       <input name="dt-departure" type="datetime" bind:value={dt_departure}>
+       <input name="dt-departure" type="datetime" class="input-item" bind:value={dt_departure}>
 
-       <label for="dt-arrival" class="item-title">Arrival</label>
-       <select name="tz-arrival" bind:value={tz_arrival}>
+       <label for="dt-arrival" class="item-title item-label">Arrival</label>
+       <select name="tz-arrival" class="input-item" bind:value={tz_arrival} tabindex="-1">
            {#each gmt_list as gmt}
-               <option value={gmt}>{gmt}</option>
+               <option value={gmt} class="input-item">{gmt}</option>
            {/each}
        </select>
-       <input name="tz-arrival" type="datetime" bind:value={dt_arrival}>
+       <input name="tz-arrival" type="datetime" class="input-item" bind:value={dt_arrival}>
 
-       <span class="item-title">LNG Density</span>
-       <span class="item-title">kg/m3</span>
+       <span class="item-title item-label">LNG Density</span>
+       <span class="unit-item">kg/m3</span>
        <div class="input-btn-area">
-           <input id="LNG Density" type="number" bind:value={lng_density}>
-           <button onclick={() => getAverage("LNG Density")}>load</button>
+           <input id="LNG Density" type="number" class="input-item" bind:value={lng_density}>
+           <button onclick={() => getAverage("LNG Density")} tabindex="-1">load</button>
        </div>
 
-       <span class="item-title">BOG Density</span>
-       <span class="item-title">kg/m3</span>
+       <span class="item-title item-label">BOG Density</span>
+       <span class="unit-item">kg/m3</span>
        <div class="input-btn-area">
-           <input type="number" bind:value={bog_density}>
-           <button onclick={() => getAverage("Average BOG Density")}>load</button>
+           <input type="number" class="input-item" bind:value={bog_density}>
+           <button onclick={() => getAverage("Average BOG Density")} tabindex="-1">load</button>
        </div>
 
-       <span class="item-title">BOG LHV</span>
-       <span class="item-title">kJ/kg</span>
+       <span class="item-title item-label">BOG LHV</span>
+       <span class="unit-item">kJ/kg</span>
        <div class="input-btn-area">
-           <input type="number" bind:value={bog_lhv}>
-           <button onclick={() => getAverage("Average BOG LHV")}>load</button>
+           <input type="number" class="input-item" bind:value={bog_lhv}>
+           <button onclick={() => getAverage("Average BOG LHV")} tabindex="-1">load</button>
        </div>
 
        <div class="export-btn-area">
            <ExportBtn bind:this={btn} action={exportVoyageReport}></ExportBtn>
        </div>
    </div>
-   <div style="height: 28vh; background-color: red;">
+   <div style="height: 32vh; background-color: red;">
        <MsgPanel bind:this={msgPanel} bind:msg={msg}></MsgPanel>
    </div>
 </article>
@@ -232,12 +232,39 @@ async function exportVoyageReport() {
     width: 100%;
 }
 
+.input-item {
+    text-align: center;
+    font-size: 0.9em;
+}
+
 .input-panel {
     display: grid;
     grid-template-columns: 0.4fr 0.5fr 0.7fr;
     row-gap: 0.5em;
     column-gap: 2em;
     padding: 1em 0;
+}
+
+.unit-item {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.input-item:hover {
+    border-color: #396cd8;
+    /* cursor: pointer; */
+}
+
+.input-item:focus {
+    background-color: #e6f7ff;
+    outline: none;
+    border-color: transparent;
+    box-shadow: 0 0 0 1px rgba(0, 123, 255, 0.2), 0 0 0 2px rgba(0, 123, 255, 0.2);
+}
+
+.item-label {
+    font-weight: bold;
 }
 
 .item-title {

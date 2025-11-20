@@ -33,29 +33,29 @@ async function msgHandler() {
 <Modal showModal={showModal}></Modal>
 
 <style>
-    @font-face {
-        font-family: 'Source Code Pro Italic';
-        src: url('/fonts/Source_Code_Pro/SourceCodePro-Italic-VariableFont_wght.ttf');
-    }
+@font-face {
+    font-family: 'Source Code Pro Italic';
+    src: url('/fonts/Source_Code_Pro/SourceCodePro-Italic-VariableFont_wght.ttf');
+}
 
-    @font-face {
-        font-family: 'Source Code Pro';
-        src: url('/fonts/Source_Code_Pro/SourceCodePro-VariableFont_wght.ttf');
-    }
+@font-face {
+    font-family: 'Source Code Pro';
+    src: url('/fonts/Source_Code_Pro/SourceCodePro-VariableFont_wght.ttf');
+}
 
-    button {
-        margin: 0 1em;
-        width: 4em;
-        height: 2.5em;
-    }
+button {
+    margin: 0 1em;
+    width: 4em;
+    height: 2.5em;
+}
 
-    #two {
-        font-family: 'Source Code Pro';
-        background-color: aliceblue;
-    }
+#two {
+    font-family: 'Source Code Pro';
+    background-color: aliceblue;
+}
 
-    #three {
-        font-family: 'Source Code Pro Italic';
-        background-color: aliceblue;
-    }
+#three {
+    font-family: 'Source Code Pro Italic';
+    background-color: aliceblue;
+}
 </style>
