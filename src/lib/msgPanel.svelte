@@ -23,9 +23,8 @@ textarea {
     height: 100%;
     box-sizing: border-box;
     font-family: 'Courier New', Courier, monospace;
-    /* overflow-x: scroll; */
-    overflow-y: scroll;
+    overflow-y: auto;
     white-space: nowrap;
-    padding: 0;
+    text-indent: 1em;
 }
 </style>

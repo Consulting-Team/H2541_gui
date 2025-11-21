@@ -5,7 +5,7 @@ import { message } from "@tauri-apps/plugin-dialog";
 import { gmt_list } from "$lib/data";
 import { getCurrentDatetime } from "$lib/common";
 import { getCurrentWebviewWindow } from "@tauri-apps/api/webviewWindow";
-import YAML from 'yaml';
+import YAML, { stringify } from 'yaml';
 import ExportBtn from '$lib/exportBtn.svelte';
 import MsgPanel from "$lib/msgPanel.svelte";
 
@@ -18,7 +18,6 @@ const appWebView = getCurrentWebviewWindow();
 let btn;
 /** @type {MsgPanel}*/
 let msgPanel;
-let msg = $state('');
 
 let port_departure = $state(localStorage.getItem(`port_departure_${repoType}`) || 'PortA');
 let port_arrival = $state(localStorage.getItem(`port_arrival_${repoType}`) || 'PortB');
@@ -29,6 +28,7 @@ let dt_arrival = $state(localStorage.getItem(`dt_arrival_${repoType}`) || dateti
 let lng_density = $state(localStorage.getItem(`lng_density_${repoType}`) || '447.093');
 let bog_density = $state(localStorage.getItem(`bog_density_${repoType}`) || '0.779');
 let bog_lhv = $state(localStorage.getItem(`bog_lhv_${repoType}`) || '45400');
+let msg = $state(sessionStorage.getItem(`msg_${repoType}`) || '');
 
 $effect(() => {
     localStorage.setItem(`port_departure_${repoType}`, port_departure);
@@ -42,8 +42,12 @@ $effect(() => {
     localStorage.setItem(`bog_lhv_${repoType}`, bog_lhv);
 });
 
+$effect(() => {
+    sessionStorage.setItem(`msg_${repoType}`, msg);
+});
+
 appWebView.listen('message', (event) => {
-    msg = msg.concat(`${event.payload}\n`);
+    msg = msg.concat(`${event.payload}\n`.replaceAll('\'', ''));
 });
 
 /** @param {string} item */
@@ -174,7 +178,7 @@ async function exportReport() {
     <span></span>
     <input type="text" class="input-item" bind:value={port_arrival}>
 
-    <span class="item-title item-label">Departure</span>
+    <span class="item-title item-label">Departure Time</span>
     <select name="tz-departure" class="input-item" bind:value={tz_departure} tabindex="-1">
         {#each gmt_list as gmt}
             <option value={gmt} class="input-item">{gmt}</option>
@@ -182,7 +186,7 @@ async function exportReport() {
     </select>
     <input name="dt-departure" type="datetime" class="input-item" bind:value={dt_departure}>
 
-    <label for="dt-arrival" class="item-title item-label">Arrival</label>
+    <label for="dt-arrival" class="item-title item-label">Arrival Time</label>
     <select name="tz-arrival" class="input-item" bind:value={tz_arrival} tabindex="-1">
         {#each gmt_list as gmt}
             <option value={gmt} class="input-item">{gmt}</option>
@@ -193,21 +197,21 @@ async function exportReport() {
     <span class="item-title item-label">LNG Density</span>
     <span class="unit-item">kg/m3</span>
     <div class="input-btn-area">
-        <input id="LNG Density" type="number" class="input-item" bind:value={lng_density}>
+        <input type="number" step="any" class="input-item" bind:value={lng_density}>
         <button onclick={() => getAverage("LNG Density")} tabindex="-1">load</button>
     </div>
 
     <span class="item-title item-label">BOG Density</span>
     <span class="unit-item">kg/m3</span>
     <div class="input-btn-area">
-        <input type="number" class="input-item" bind:value={bog_density}>
+        <input type="number" step="any" class="input-item" bind:value={bog_density}>
         <button onclick={() => getAverage("Average BOG Density")} tabindex="-1">load</button>
     </div>
 
     <span class="item-title item-label">BOG LHV</span>
     <span class="unit-item">kJ/kg</span>
     <div class="input-btn-area">
-        <input type="number" class="input-item" bind:value={bog_lhv}>
+        <input type="number" step="any" class="input-item" bind:value={bog_lhv}>
         <button onclick={() => getAverage("Average BOG LHV")} tabindex="-1">load</button>
     </div>
 
