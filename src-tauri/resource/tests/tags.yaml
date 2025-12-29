@@ -2,24 +2,9 @@ departure: 2025-10-04 20:30:00
 arrival:   2025-10-04 21:30:00
 
 IAS:
-  # - CTS.SHIPWIDE.01/ShipTotVolCorr/PRIM
-  # - TotalLiq/Meas1/PRIM
-  # - FM-ME1-40100_A/AccValue/PRIM
-  # - FM-ME2-40100_A/AccValue/PRIM
-  # - PM501.22/Meas1/PRIM
-  # - PM601.22/Meas1/PRIM
-  # - STM-001/Meas1/PRIM
-  # - STM-004/Meas1/PRIM
-  # - STM-006/Meas1/PRIM
-  # - OE012.02/AccValue/PRIM
-  # - GM047.01/Meas1/PRIM
-  # - GH024.02/AccValue/PRIM
-  # - GC029.02/AccValue/PRIM
-  # - FR029.02/AccValue/PRIM
-  # - FV010.05/AccValue/PRIM
-  - DM.DPR.AVG/Meas1/PRIM
-  - GA-003C/Meas1/PRIM
-  - GA-0032/Meas1/PRIM
+  - MES-30253/Meas1/PRIM
+  - MEP-30253/Meas1/PRIM
+  - BMS-S-10050A/Meas1/PRIM
 
 VDVBW:
   - longitudinal_water_speed

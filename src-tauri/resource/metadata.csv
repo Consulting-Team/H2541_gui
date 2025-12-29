@@ -25,6 +25,10 @@ Main engines LSMGO consumption ME1,IAS,FM-ME1-40100_A/AccValue/PRIM,tons
 Main engines LSMGO consumption ME2,IAS,FM-ME2-40100_A/AccValue/PRIM,tons
 Main engines BOG consumption ME1,IAS,GM045.02/AccValue/PRIM,tons
 Main engines BOG consumption ME2,IAS,GM046.02/AccValue/PRIM,tons
+Main engines mode gas ME1,IAS,MES-30253/Meas1/PRIM,-
+Main engines mode gas ME2,IAS,MEP-30253/Meas1/PRIM,-
+Main engines mode tier3 ME1,IAS,BMS-S-10051/Meas1/PRIM,-
+Main engines mode tier3 ME2,IAS,BMS-P-10051/Meas1/PRIM,-
 GE Alternators average output power Alternator1,IAS,PM101.03/Meas1/PRIM,kW
 GE Alternators average output power Alternator2-1,IAS,PM201.03/Meas1/PRIM,kW
 GE Alternators average output power Alternator2-2,IAS,PM211.03/Meas1/PRIM,kW
@@ -33,9 +37,15 @@ Generators Fuel Gas consumption,IAS,GE006.02/AccValue/PRIM,tons
 Generator Engins LSMGO flow in,IAS,OE012.02/AccValue/PRIM,tons
 GE Alternator flow in,IAS,FM-DG_40100.02/AccValue/PRIM,tons
 GE Alternator flow out,IAS,FM-DG_40101.02/AccValue/PRIM,tons
-GE1 ENGINE LOAD (%),IAS,GE1-30321/Meas1/PRIM,%
-GE2 ENGINE LOAD (%),IAS,GE2-30321/Meas1/PRIM,%
-GE3 ENGINE LOAD (%),IAS,GE3-30321/Meas1/PRIM,%
+GE1 engine load,IAS,GE1-30321/Meas1/PRIM,%
+GE2 engine load,IAS,GE2-30321/Meas1/PRIM,%
+GE3 engine load,IAS,GE3-30321/Meas1/PRIM,%
+GE1 tier3 mod,IAS,GE1-SCR10-111BT/Out/PRIM,-
+GE2 tier3 mod,IAS,GE2-SCR10-112BT/Out/PRIM,-
+GE3 tier3 mod,IAS,GE3-SCR10-113BT/Out/PRIM,-
+GE1 gas mode,IAS,GE1-10093/Meas1/PRIM,-
+GE2 gas mode,IAS,GE2-10093/Meas1/PRIM,-
+GE3 gas mode,IAS,GE3-10093/Meas1/PRIM,-
 Total LSMGO consumption AB,IAS,OB001.02/AccValue/PRIM,tons
 Total flow through GCU,IAS,GC029.02/AccValue/PRIM,tons
 Total flow through Vent mast,IAS,GH024.02/AccValue/PRIM,tons
