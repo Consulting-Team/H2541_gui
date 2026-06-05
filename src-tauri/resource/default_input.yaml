@@ -24,11 +24,17 @@ port_arrival: "Port B"
 # arrival:   2025-10-27 09:00:00
 
 # #DIV/0! 테스트
+# tz_departure: GMT+0
+# departure: 2025-10-24 07:00:00
+# tz_arrival: GMT+0
+# arrival:   2025-10-24 09:00:00
+
+# H2543 추가기능 개발
 tz_departure: GMT+0
-departure: 2025-10-24 07:00:00
+departure: 2026-01-27 17:11:00
 
 tz_arrival: GMT+0
-arrival:   2025-10-24 09:00:00
+arrival: 2026-01-27 17:33:00
 
 lng_density: 447.093
 bog_density: 0.779

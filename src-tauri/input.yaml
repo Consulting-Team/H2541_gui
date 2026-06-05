@@ -4,6 +4,7 @@ port_arrival: "Port B"
 # H2542 해상시운전 기간
 tz_departure: GMT+0
 departure: 2025-10-04 20:30:00
+
 tz_arrival: GMT+0
 arrival:   2025-10-04 21:30:30
 

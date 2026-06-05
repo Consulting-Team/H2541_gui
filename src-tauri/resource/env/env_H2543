@@ -1,6 +1,6 @@
-# H2541
-SHIP_NAME="VENTURE PELICAN"
-IMO="9970569"
+# H2543
+SHIP_NAME="VENTURE CAMERON"
+IMO="9970583"
 
 # 제원
 ME_MODEL="MAN B&W 6G70ME-C10.5-GI x 2"
@@ -22,10 +22,10 @@ HOST="192.168.200.10:9042"
 USER="tapp"
 
 # 장비별 UUID --------------------------------------------------------------------------------#
-# H2541
-IAS="9e2e3ea2-4bb6-40f4-9cf9-f7a49e5172bb"
-SMARTNAVI="107b7d43-bdb9-4ec9-9c25-b398c14f3403"
-VDR="a93a6d2c-e9bb-4af7-9ce0-0b852e11e0e7"
+# H2543
+IAS="b685da66-fe93-4557-936d-a3d52195ee7a"
+SMARTNAVI="779159d1-0efa-4c1f-a981-51f1ae051bb2"
+VDR="7e8c48bc-70de-46ca-866a-ccdd8895cf21"
 
 # 리샘플 주기 설정 (단위: 분)
 RESAMPLE_PERIOD_VDR=1

@@ -17,8 +17,14 @@ Main engines average shaft RPM ME1,IAS,STM-003/Meas1/PRIM,rpm
 Main engines average shaft RPM ME2,IAS,STM-006/Meas1/PRIM,rpm
 Main engines load ME1,IAS,TX010.01/Meas1/PRIM,%
 Main engines load ME2,IAS,TX110.01/Meas1/PRIM,%
+Main engines running ME1,IAS,ME01_RUN/OutRunning/PRIM,-
+Main engines running ME2,IAS,ME02_RUN/OutRunning/PRIM,-
+Mine engines GAS supply running ME1,IAS,GM012.01/Meas1/PRIM,-
+Mine engines GAS supply running ME2,IAS,GM032.01/Meas2/PRIM,-
 Main engines average shaft power ME1,IAS,STM-001/Meas1/PRIM,kW
 Main engines average shaft power ME2,IAS,STM-004/Meas1/PRIM,kW
+Shaft Generator PTO in operation SG1,IAS,PM501.01/Meas1/PRIM,-
+Shaft Generator PTO in operation SG2,IAS,PM601.01/Meas1/PRIM,-
 Shaft Generator average output power SG1,IAS,PM501.22/Meas1/PRIM,kW
 Shaft Generator average output power SG2,IAS,PM601.22/Meas1/PRIM,kW
 Main engines LSMGO consumption ME1,IAS,FM-ME1-40100_A/AccValue/PRIM,tons
@@ -51,6 +57,11 @@ Total flow through GCU,IAS,GC029.02/AccValue/PRIM,tons
 Total flow through Vent mast,IAS,GH024.02/AccValue/PRIM,tons
 Total flow reliquefied,IAS,FR029.02/AccValue/PRIM,tons
 Total flow forcing vaporizer outlet,IAS,FV010.05/AccValue/PRIM,tons
+NO1 DUAL FUEL GENERATOR RUNNING,IAS,DFGE1/Running/PRIM,_
+NO2 DUAL FUEL GENERATOR RUNNING,IAS,DFGE2/Running/PRIM,_
+NO3 DUAL FUEL GENERATOR RUNNING,IAS,DFGE3/Running/PRIM,_
+VFD COMPRESSOR MAIN MOTOR POWER,IAS,ALS-40159/Meas1/PRIM,kw
+FIXED COMPRESSOR MAIN MOTOR POWER,IAS,ALS-40129/Meas1/PRIM,kw
 Average longitudinal water speed (Log),VDVBW,longitudinal_water_speed,knots
 Average transverse water speed (Log),VDVBW,traverse_water_speed,knots
 Wind speed,YXMWV,wind_speed,m/s

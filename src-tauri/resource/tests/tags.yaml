@@ -1,10 +1,14 @@
-departure: 2025-10-04 20:30:00
-arrival:   2025-10-04 21:30:00
+# departure: 2025-10-04 20:30:00
+# arrival:   2025-10-04 21:30:00
+# departure: 2026-01-25 05:45:00
+# arrival:   2026-01-25 05:55:00
+departure: 2026-01-27 17:11:00
+arrival:   2026-01-27 17:33:00
 
 IAS:
-  - MES-30253/Meas1/PRIM
-  - MEP-30253/Meas1/PRIM
-  - BMS-S-10050A/Meas1/PRIM
+  - DFGE1/Running/PRIM
+  - DFGE2/Running/PRIM
+  - DFGE3/Running/PRIM
 
 VDVBW:
   - longitudinal_water_speed

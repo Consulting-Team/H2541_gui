@@ -1,8 +1,8 @@
 {
-  "$schema": "https://schema.tauri.app/config/2",
-  "productName": "ReportGen",
-  "mainBinaryName": "ReportGen",
-  "version": "1.0.0",
+  "$schema": "https://schema.tauri.app/tauri.conf.json",
+  "productName": "H2542_ReportGen",
+  "mainBinaryName": "H2542_ReportGen",
+  "version": "1.2.4",
   "identifier": "com.VG.ReportGen",
   "build": {
     "beforeDevCommand": "npm run dev",
@@ -28,8 +28,8 @@
     "active": true,
     "targets": "all",
     "resources": {
-      "resource/" : "resource/",
-      "resource/env/.env_H2543": "./.env"
+      "resource/env/.env_H2542": "./.env",
+      "resource/" : "resource/"
     },
     "externalBin": [
       "binaries/report_gen/cli",
