@@ -6,7 +6,7 @@ LNG Temperature CT1,IAS,CTS.CT1.TMP.LIQ/Meas1/PRIM,°C
 LNG Temperature CT2,IAS,CTS.CT2.TMP.LIQ/Meas1/PRIM,°C
 LNG Temperature CT3,IAS,CTS.CT3.TMP.LIQ/Meas1/PRIM,°C
 LNG Temperature CT4,IAS,CTS.CT4.TMP.LIQ/Meas1/PRIM,°C
-LNG Density,IAS,DM.DPR.AVG/Meas1/PRIM,kg/m3
+LNG Density,IAS,DM.DPR.AVG/Avg/PRIM,kg/m3
 Average BOG Density,IAS,GA-003C/Meas1/PRIM,kg/m3
 Average BOG LHV,IAS,GA-0032/Meas1/PRIM,MJ/kg
 Vapor Header Pressure CT1,IAS,CTS.CT1.PRESS/Meas1/PRIM,mbarA
@@ -23,12 +23,12 @@ Mine engines GAS supply running ME1,IAS,GM012.01/Meas1/PRIM,-
 Mine engines GAS supply running ME2,IAS,GM032.01/Meas2/PRIM,-
 Main engines average shaft power ME1,IAS,STM-001/Meas1/PRIM,kW
 Main engines average shaft power ME2,IAS,STM-004/Meas1/PRIM,kW
-Shaft Generator PTO in operation SG1,IAS,PM501.01/Meas1/PRIM,-
-Shaft Generator PTO in operation SG2,IAS,PM601.01/Meas1/PRIM,-
+Shaft Generator PTO in operation SG1,IAS,PM501.32/Meas1/PRIM,-
+Shaft Generator PTO in operation SG2,IAS,PM601.32/Meas1/PRIM,-
 Shaft Generator average output power SG1,IAS,PM501.22/Meas1/PRIM,kW
 Shaft Generator average output power SG2,IAS,PM601.22/Meas1/PRIM,kW
-Main engines LSMGO consumption ME1,IAS,FM-ME1-40100_A/AccValue/PRIM,tons
-Main engines LSMGO consumption ME2,IAS,FM-ME2-40100_A/AccValue/PRIM,tons
+Main engines LSMGO consumption ME1,IAS,FM-ME1-40100.02/AccValue/PRIM,tons
+Main engines LSMGO consumption ME2,IAS,FM-ME2-40100.02/AccValue/PRIM,tons
 Main engines BOG consumption ME1,IAS,GM045.02/AccValue/PRIM,tons
 Main engines BOG consumption ME2,IAS,GM046.02/AccValue/PRIM,tons
 Main engines mode gas ME1,IAS,MES-30253/Meas1/PRIM,-
@@ -62,6 +62,10 @@ NO2 DUAL FUEL GENERATOR RUNNING,IAS,DFGE2/Running/PRIM,_
 NO3 DUAL FUEL GENERATOR RUNNING,IAS,DFGE3/Running/PRIM,_
 VFD COMPRESSOR MAIN MOTOR POWER,IAS,ALS-40159/Meas1/PRIM,kw
 FIXED COMPRESSOR MAIN MOTOR POWER,IAS,ALS-40129/Meas1/PRIM,kw
+NO.1 FG COMP RUNNING,IAS,CM-001/OutRunning/PRIM,-
+NO.2 FG COMP RUNNING,IAS,CM-101/OutRunning/PRIM,-
+NO.1 FG COMP MTR CURRENT IND,IAS,FC100.06/Meas1/PRIM,A
+NO.2 FG COMP MTR CURRENT IND,IAS,FC200.06/Meas1/PRIM,A
 Average longitudinal water speed (Log),VDVBW,longitudinal_water_speed,knots
 Average transverse water speed (Log),VDVBW,traverse_water_speed,knots
 Wind speed,YXMWV,wind_speed,m/s

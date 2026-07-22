@@ -2,11 +2,18 @@ port_departure: "Port A"
 port_arrival: "Port B"
 
 # H2542 해상시운전 기간
+# tz_departure: GMT+0
+# departure: 2025-10-04 20:30:00
+
+# tz_arrival: GMT+0
+# arrival:   2025-10-04 21:30:30
+
+# H2542 SG 운행시간
 tz_departure: GMT+0
-departure: 2025-10-04 20:30:00
+departure: 2025-10-27 14:24:00
 
 tz_arrival: GMT+0
-arrival:   2025-10-04 21:30:30
+arrival:   2025-10-27 15:32:00
 
 # H2542 테스트(NCR endurance)
 # departure: 2025-10-05 01:30:00

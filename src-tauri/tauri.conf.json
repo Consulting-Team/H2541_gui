@@ -1,8 +1,8 @@
 {
   "$schema": "https://schema.tauri.app/tauri.conf.json",
-  "productName": "H2542_ReportGen",
-  "mainBinaryName": "H2542_ReportGen",
-  "version": "1.2.4",
+  "productName": "H2543_ReportGen",
+  "mainBinaryName": "H2543_ReportGen",
+  "version": "1.3.2",
   "identifier": "com.VG.ReportGen",
   "build": {
     "beforeDevCommand": "npm run dev",
@@ -13,7 +13,7 @@
   "app": {
     "windows": [
       {
-        "title": "Report Generator",
+        "title": "Report Generator 1.3.2",
         "width": 800,
         "height": 600,
         "maximizable": false,
@@ -26,9 +26,9 @@
   },
   "bundle": {
     "active": true,
-    "targets": "all",
+    "targets": ["nsis"],
     "resources": {
-      "resource/env/.env_H2542": "./.env",
+      "resource/env/.env_H2543": ".env",
       "resource/" : "resource/"
     },
     "externalBin": [

@@ -45,7 +45,8 @@ async fn get_average(
             let line = String::from_utf8_lossy(line_bytes);
             let line = line.trim();
 
-            println!("{line}");
+            // println!("{line}");
+
             let split = line.split(":").collect::<Vec<_>>();
             let str_value = split
                 .get(1)
@@ -100,23 +101,25 @@ async fn export_report(
         .args(["-s", input, "-t", repo_type]);
     // println!("{}", "-".repeat(50));
 
-    let (mut rx, mut child) = sidecar_command.spawn().expect("Failed to spawn side car.");
+    let (mut rx, _) = sidecar_command.spawn().expect("Failed to spawn side car.");
     let re = Regex::new(r#"\("([^"]*)"\)"#).unwrap();
 
     while let Some(event) = rx.recv().await {
+        if let CommandEvent::Terminated(_) = &event {
+            break;
+        }
+
         if let CommandEvent::Stdout(line_bytes) = &event {
             let line = String::from_utf8_lossy(line_bytes);
             let line = line.trim();
 
-            println!("{line}");
             window
                 .emit("message", Some(format!("'{}'", line)))
                 .expect("Failed to emit event to message.");
-            // child.write("message from Rust\n".as_bytes()).unwrap();
-            // child.write("message from Rust\n".as_bytes()).map_err(|e| e.to_string())?;
-            child
-                .write("message from Rust\n".as_bytes())
-                .expect("Failed to write message to child.");
+
+            // child
+            //     .write("message from Rust\n".as_bytes())
+            //     .expect("Failed to write message to child.");
         }
 
         if let CommandEvent::Stderr(tmp) = &event {

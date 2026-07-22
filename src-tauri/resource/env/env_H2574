@@ -1,0 +1,31 @@
+# H2574
+SHIP_NAME="VENTURE MANATEE"
+IMO="9997634"
+
+# 173k 제원
+ME_MODEL="MAN B&W 5G70ME-C10.5-GI x 2"
+MCR_PWR=12490        # each
+MCR_RPM=67.6
+GE_MODEL="9H35DF"
+GE_RATED_PWR=4320
+GE_RATED_RPM=720
+PROP_PITCH=9.2695    # Dia * 0.7R Pitch Ratio
+CAPA=173000          # 173K
+
+# 데이터베이스 --------------------------------------------------------------------------------#
+# 시흥 DB 연결
+# HOST="210.104.69.143:49042"
+# USER="tapp"
+
+# 실선 연결
+HOST="192.168.200.10:9042"
+USER="tapp"
+
+# 장비별 UUID --------------------------------------------------------------------------------#
+# H2574
+IAS="fd48bc39-6cc3-4937-8cfa-4cd359649746"
+VDR="43493ca5-0263-4c44-9b94-5e5b2789864a"
+SMARTNAVI="779159d1-0efa-4c1f-a981-51f1ae051bb2"
+
+# 리샘플 주기 설정 (단위: 분)
+RESAMPLE_PERIOD_VDR=1

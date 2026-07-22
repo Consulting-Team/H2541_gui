@@ -116,7 +116,7 @@ async function exportReport() {
                 extensions: ['xlsx'],
             },
         ],
-        defaultPath: `C:\\Users\\H5495\\Documents\\${repoType}_report`,
+        // defaultPath: `C:\\Users\\H5495\\Documents\\${repoType}_report`,
     });
 
     if (output_file === null) {

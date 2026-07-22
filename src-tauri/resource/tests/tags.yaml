@@ -2,13 +2,12 @@
 # arrival:   2025-10-04 21:30:00
 # departure: 2026-01-25 05:45:00
 # arrival:   2026-01-25 05:55:00
-departure: 2026-01-27 17:11:00
-arrival:   2026-01-27 17:33:00
+departure: 2025-10-27 14:24:00
+arrival:   2025-10-27 15:32:00
 
 IAS:
-  - DFGE1/Running/PRIM
-  - DFGE2/Running/PRIM
-  - DFGE3/Running/PRIM
+  - PM501.22/Meas1/PRIM
+  - PM601.22/Meas1/PRIM
 
 VDVBW:
   - longitudinal_water_speed
